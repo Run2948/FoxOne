@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="renderer" content="ie-stand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="~/content/css/reset.css" rel="stylesheet" />
+    <link href="~/content/css/common.css" rel="stylesheet" />
+    <link href="~/content/css/icon.css" rel="stylesheet" />
+    <link href="~/content/js/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Content/js/layout/css/easyui.css" rel="stylesheet" />
+    <link href="~/content/themes/default/default.css" rel="stylesheet" />
+
+    <script src="~/Content/js/jquery-1.9.1.min.js"></script>
+    <script src="~/Content/js/layout/jquery.easyui.min.js"></script>
+    <script src="~/Content/js/zTree_v3/js/jquery.ztree.all-3.5.min.js"></script>
+    <script src="~/Content/js/common.js"></script>
+</head>
+<body class="easyui-layout">
+    <div class="alert-dialog" id="descDiv" style="width:600px;height:300px;">
+        <div class="alert-content">
+            <div class="alert-header">
+                <h4 class="alert-title">描述</h4>
+            </div>
+            <div class="alert-body">
+                <div class="form">
+                    <form  method="post" class="form form-horizontal">
+
+                        <div class="form-group">
+                            <label for="Reason">原因：</label>
+                            <select id="Reason" name="Reason" class="form-control">
+                                <option value="1">原因1</option>
+                                <option value="2">原因2</option>
+                                <option value="3">原因3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">描述：</label>
+                            <textarea class="form-control" id="Description" name="Description"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <input class="btn btn-primary btn-big" id="btnSubmit" name="" type="submit" value="保存" />
+                            <input class="btn btn-default btn-big" id="btnClose" name="" type="button" value="关闭" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function megerRow(maxCellIndex) {
+            var trs = $(".table>tbody>tr");
+            if (trs.length < 2) return;
+            var i = 0, j = 0;
+            for (var cellIndex = maxCellIndex; cellIndex >= 0; cellIndex--) {
+                i = 0, j = 0;
+                var originalValue = trs.eq(0).find("td:eq(" + cellIndex + ")").html();
+                trs.each(function () {
+                    var td = $(this).find("td:eq(" + cellIndex + ")");
+                    if (td.html() != originalValue) {
+                        trs.eq(i).find("td:eq(" + cellIndex + ")").attr("rowspan", j - i);
+                        i = j;
+                        originalValue = td.html();
+                    }
+                    else {
+                        if (j != i) {
+                            td.remove();
+                        }
+                    }
+                    j++;
+                });
+                if (j > (i + 1)) {
+                    trs.eq(i).find("td:eq(" + cellIndex + ")").attr("rowspan", j - i);
+                }
+            }
+        }
+
+        $("#DetectionItemSelectorTree-ul").bind("nodeCheck", function (e) {
+            var param = foxOne.getQueryString();
+            var ids = [];
+            var texts = [];
+            var nodes = $.fn.zTree.getZTreeObj("DetectionItemSelectorTree-ul").getCheckedNodes();
+            $.each(nodes, function () {
+                ids.push(this.id);
+                texts.push(this.name);
+            });
+            $("#" + param._input_id, window.parent.document).val(ids.join(','));
+            $("#" + param._input_text, window.parent.document).val(texts.join(','));
+        });
+
+        function initValue() {
+            $("#DetectionItemSelectorTree-ul").bind("dataLoad", function (data) {
+                var param = foxOne.getQueryString();
+                var ids = $("#" + param._input_id, window.parent.document).val();
+                if (ids != '') {
+                    var idArr = ids.split(',');
+                    for (var i = 0; i < data.length; i++) {
+                        for (var j = 0; j < idArr.length; j++) {
+                            if (data[i] == idArr[j]) {
+                                data[i].checked = true;
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

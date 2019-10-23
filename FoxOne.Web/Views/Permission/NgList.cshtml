@@ -1,0 +1,154 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="~/content/css/reset.css" rel="stylesheet" />
+    <link href="~/content/css/common.css" rel="stylesheet" />
+    <link href="~/content/themes/default/default.css" rel="stylesheet" />
+    <style>
+        .repeater-item {
+            border: 1px solid #CCC;
+            background-color: #EEE;
+            padding: 10px;
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: left;
+        }
+
+            .repeater-item p {
+                border-bottom: 1px dashed #CCC;
+                font-weight: bold;
+                padding-bottom: 5px;
+            }
+
+        .repeater-item-checked {
+            background: white url(../../Content/themes/default/images/success.png) 140px 5px no-repeat;
+        }
+
+        .repeater-item-checked-lock {
+            background: #EEEFFF url(../../Content/themes/default/images/success.png) 140px 5px no-repeat;
+        }
+
+        .radio-span {
+            display: block;
+        }
+
+        .type-header {
+            float: left;
+            width: 100%;
+            border-bottom: 1px dashed #CCC;
+            padding-bottom: 10px;
+            margin: 10px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+    </style>
+    <script src="~/Content/js/angular.min.js"></script>
+</head>
+<body>
+    <div class="main-container" ng-app="permission" ng-controller="list">
+        <div style="position:absolute;right:20px;top:20px;">
+            查找功能：<input type="text" ng-model="pName" />
+        </div>
+        <div class="data-list">
+            <div ng-repeat="x in first" id="{{x.PermissionId}}">
+                <h1 class="type-header">{{x.PermissionName}}</h1>
+                <div ng-repeat="c in x.Children | filter:pName |orderBy:'Rank'" id="{{c.PermissionId}}" class="repeater-item {{c.Checked?'repeater-item-checked':''}}">
+                    <p>{{c.Rank}} - {{c.PermissionName}}</p>
+                    <ul>
+                        <li ng-repeat="c1 in c.Children">
+                            <input type="checkbox" checked="{{c1.Checked?'checked':''}}" id="{{c1.PermissionId}}">&nbsp;<label>{{c1.PermissionName}}</label>
+                            <span class="radio-span" ng-repeat="cc1 in c1.Children | orderBy:'Rank'">
+                                <input type="radio" checked="{{cc1.Checked?'checked':''}}" style="margin-left:15px;" name="{{c1.PermissionId}}" id="{{cc1.PermissionId}}" />
+                                {{cc1.PermissionName}}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var app = angular.module('permission', []);
+        var urlParameter = getQueryString();
+        var postData = { RoleId: urlParameter.id, PermissionId: '' };
+        var addRolePermission = "exec:RoleTypePermission.Add";
+        var removeRolePermission = "exec:RoleTypePermission.Remove";
+        var getRolePermission = "RoleTypePermission.Get";
+        var firstP = {};
+        app.controller('list', function ($scope, $http) {
+            $http.get("/Home/GetDataBySqlId?sqlId=Permission.Select").success(function (res) {
+                //先取所有权限规则
+                if (urlParameter.type == "role") {
+                    addRolePermission = "exec:RolePermission.Add";
+                    removeRolePermission = "exec:RolePermission.Remove";
+                    getRolePermission = "RolePermission.Get";
+                }
+                $http.get("/Home/GetDataBySqlId?RoleId=" + urlParameter.id + "&sqlId=" + getRolePermission).success(function (rP) {
+                    //再取当前角色/角色类型 所拥有的 权限规则
+                    $scope.first = [];
+                    var rolePermission = rP.Data;
+                    for (var i = 0; i < res.Data.length; i++) {
+                        var d = res.Data[i];
+                        d.Checked = hasPermission(d.PermissionId, rolePermission);
+                        if (!firstP[d.PermissionType]) {
+                            firstP[d.PermissionType] = [];
+                        }
+                        firstP[d.PermissionType].push(d);
+                    }
+                    for (var i = 0; i < firstP[1].length; i++) {
+                        var d = firstP[1][i];
+                        getChildren(d);
+                        $scope.first.push(d);
+                    }
+                });
+            });
+        });
+
+        function hasPermission(permissionId, rolePermission) {
+            for (var i = 0; i < rolePermission.length; i++) {
+                if (permissionId == rolePermission[i].PermissionId) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function getChildren(data) {
+            if (!firstP[data.PermissionType + 1]) return;
+            var list = firstP[data.PermissionType + 1];
+            var parentId = data.PermissionId;
+            data.Children = [];
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].ParentId == parentId) {
+                    getChildren(list[i]);
+                    data.Children.push(list[i]);
+                }
+            }
+        }
+
+        function getQueryString() {
+            if (window.location.search == "") {
+                return { "": "无URL参数" };
+            }
+            var q = window.location.search.substring(1).split("&");
+            var returnValue = {};
+            for (var i = 0; i < q.length; i++) {
+                var temp = q[i].split("=");
+                returnValue[temp[0]] = temp[1];
+            }
+            return returnValue;
+        }
+
+    </script>
+
+</body>
+</html>

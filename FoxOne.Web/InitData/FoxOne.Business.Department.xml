@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ArrayOfDepartment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Department>
+    <Id>0da452de-8d4b-4884-ada4-da798ece4f41</Id>
+    <RentId>1</RentId>
+    <Name>产品部</Name>
+    <Code>008</Code>
+    <Rank>7</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2017-01-03T22:20:42.57</LastUpdateTime>
+    <ParentId>c69dc8e8-3ed9-45f1-8f40-d404725d8986</ParentId>
+    <Level>0</Level>
+    <WBS />
+  </Department>
+  <Department>
+    <Id>c69dc8e8-3ed9-45f1-8f40-d404725d8986</Id>
+    <RentId>1</RentId>
+    <Name>猎狐科技</Name>
+    <Code>Root</Code>
+    <Rank>0</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2017-01-03T22:00:08.06</LastUpdateTime>
+    <ParentId />
+    <Level>1</Level>
+    <WBS>0001</WBS>
+  </Department>
+</ArrayOfDepartment>

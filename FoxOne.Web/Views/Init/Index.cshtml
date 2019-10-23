@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>系统初始化</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    <style>
+        html, body {
+            background-color: #EEE;
+        }
+
+        .container {
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            background-color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            margin-left: -180px;
+            margin-top: -300px;
+        }
+
+            .container h1 {
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 10px;
+                font-size: 15px;
+                margin-bottom: 20px;
+            }
+
+            .container p {
+                margin-bottom: 20px;
+            }
+
+        .item {
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            padding: 10px;
+            float: left;
+            margin-left: 50px;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>系统初始化</h1>
+        <p><a class="btn btn-primary btn-big" onclick="createTable()">第一步：创建表结构</a></p>
+        <p>
+            <a class="btn btn-success btn-big" onclick="importData()">第二步：导入表数据</a>
+        </p>
+        <p><a class="btn btn-warning btn-big" href="/Init/HomeIndex">第三步：跳转到首页</a></p>
+        <h1>数据维护</h1>
+        <p><a class="btn btn-danger btn-big" onclick="clearTable()">清空表数据</a></p>
+        <p><a class="btn btn-default btn-big" onclick="exportData()">导出表数据</a></p>
+    </div>
+    <script>
+        function createTable() {
+            r("/Init/CreateTable", "表创建成功！");
+        }
+        function clearTable() {
+            r("/Init/ClearTable", "表数据清空成功！");
+        }
+        function importData() {
+            r("/Init/InitData", "导入初始数据成功！");
+        }
+        function exportData() {
+            r("/Init/Out", "导出数据成功！");
+        }
+        function r(url, msg) {
+            foxOne.dataService(url, {}, function (res) {
+                if (res) {
+                    foxOne.alert(msg);
+                }
+            }, "post", true);
+        }
+    </script>
+</body>
+</html>

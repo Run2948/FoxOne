@@ -1,0 +1,68 @@
+﻿@{Layout = null;}
+@using FoxOne.Business
+@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+
+</head>
+<body class="easyui-layout">
+    <div class="treeform-left" data-options="region:'west',split:true" title="@Html.Lang("TreeMenu")" style="width: 230px;">
+        <div class="tree-list">
+            <ul id="tree" class="ztree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center'" style="overflow:hidden;" class="main-container">
+        <div id="baseInfo">
+            <iframe id="mainFrame" width='100%' height='98%' frameborder='0' scrolling='yes'></iframe>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var pageId = "";
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false,
+                dblClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: function (e, treeId, node) {
+                    if (node.url && node.url.length > 0) {
+                        $("#mainFrame").attr("src", node.url);
+                    }
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        };
+        function autoHeight() {
+            var listHeight = $(window).height();
+            $("#baseInfo").css("height", listHeight).css("overflow-y", "hidden");
+        }
+
+        $(document).ready(function () {
+            loadTree();
+            autoHeight();
+            $(window).resize(autoHeight);
+        });
+
+        function loadTree() {
+            foxOne.dataService("/PageDesigner/GetPage", {}, function (res) {
+                $.fn.zTree.init($("#tree"), setting, res);
+            }, "post", true);
+        }
+    </script>
+</body>
+</html>

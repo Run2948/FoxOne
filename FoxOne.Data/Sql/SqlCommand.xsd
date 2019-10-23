@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://schemas.FoxOne.net/netframework/sqlcommand"
+           targetNamespace="http://schemas.FoxOne.net/netframework/sqlcommand"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <xs:element name="commands" type="CommandsElement" />
+  
+  <xs:complexType name="CommandsElement">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="command" type="CommandElement"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="CommandElement">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="key"        type="xs:string" use="required"/>
+        <xs:attribute name="ignoreDbNamedParam"  type="xs:boolean" default="false"/>
+        <xs:attribute name="connection" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,144 @@
+﻿@model FoxOne.Business.CRUDEntity
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        .form-horizontal textarea.form-control {
+            height: 300px;
+            width: 98%;
+        }
+
+        .ti {
+            padding: 15px;
+            padding-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <form action="/PageDesigner/CRUDEdit" method="post" class="form-horizontal" enctype="multipart/form-data">
+            @Html.Hidden(FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE, ViewData[FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE], new { Id = FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE })
+            <div widget="Tab" initindex="0">
+                <div class="tab-box">
+                    <span key="baseInfo" class="tab-item">基本信息</span>
+                    <span key="InsertSQL" class="tab-item">InsertSQL</span>
+                    <span key="UpdateSQL" class="tab-item">UpdateSQL</span>
+                    <span key="SelectSQL" class="tab-item">SelectSQL</span>
+                    <span key="GetOneSQL" class="tab-item">GetOneSQL</span>
+                    <span key="DeleteSQL" class="tab-item">DeleteSQL</span>
+                    <input class="btn btn-success" id="btnSubmit" style="margin-left:20px;" type="submit" value="保存" />
+                    <input class="btn btn-default" id="btnReGenerate" onclick="reGenerate()" style="margin-left:10px;" type="button" value="重新生成" />
+                </div>
+                <div tabitem="baseInfo" class="ti">
+
+                    <div class="form-group">
+                        <label for="Id">CRUD名称：</label>
+                        <input class="form-control" id="Id" name="Id" validator="required" type="text" value="@Model.Id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Title">表名：</label>
+                        <input class="form-control" id="TableName" name="TableName" validator="required" type="text" value="@Model.TableName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">主键：</label>
+                        <input class="form-control" id="PKName" name="PKName" type="text" value="@Model.PKName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">标题字段：</label>
+                        <input class="form-control" id="TitleField" name="TitleField" type="text" value="@Model.TitleField" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">值字段：</label>
+                        <input class="form-control" id="ValueField" name="ValueField" type="text" value="@Model.ValueField" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">父级字段：</label>
+                        <input class="form-control" id="ParentField" name="ParentField" type="text" value="@Model.ParentField" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">默认排序字段：</label>
+                        <input class="form-control" id="DefaultSortExpression" name="DefaultSortExpression" type="text" value="@Model.DefaultSortExpression" />
+                    </div>
+                </div>
+                <div tabitem="InsertSQL" class="ti">
+                    <textarea class="form-control" id="InsertSQL" name="InsertSQL">@Model.InsertSQL</textarea>
+                </div>
+                <div tabitem="UpdateSQL" class="ti">
+                    <textarea class="form-control" id="UpdateSQL" name="UpdateSQL">@Model.UpdateSQL</textarea>
+                </div>
+                <div tabitem="SelectSQL" class="ti">
+
+                    <textarea class="form-control" id="SelectSQL" name="SelectSQL">@Model.SelectSQL</textarea>
+                </div>
+                <div tabitem="GetOneSQL" class="ti">
+
+                    <textarea class="form-control" id="GetOneSQL" name="GetOneSQL">@Model.GetOneSQL</textarea>
+                </div>
+                <div tabitem="DeleteSQL" class="ti">
+
+                    <textarea class="form-control" id="DeleteSQL" name="DeleteSQL">@Model.DeleteSQL</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script>
+        $(function () {
+            $(document.forms[0]).validation();
+            $("form").bind("submit", function () {
+                if ($.validation.validate(this).isError) {
+                    return false;
+                }
+                foxOne.dataService($(this).attr("action"), $(this).serialize(), function (res) {
+                    if (res) {
+                        foxOne.alert("保存成功！");
+                        try {
+                            window.parent.parent.loadTree();
+                        }
+                        catch (e) { }
+                        try {
+                            if (window.top && window.top.onDialogClose && window.top.onDialogClose.length > 0) {
+                                window.top.onDialogClose.pop()(res);
+                            }
+                        } catch (e) { }
+                    }
+
+                });
+                return false;
+            });
+            autoHeight();
+            $(window).resize(autoHeight);
+        });
+
+        function autoHeight() {
+            var screenHeight = Math.min($(window).height(), $(document).height());
+            var tabBox = $(".tab-box").height();
+            var ulHeight = screenHeight - tabBox - 30;
+            $("[tabItem]").css("height", ulHeight - 30).css("overflow-y", "auto");
+        }
+
+        function reGenerate() {
+            var key = '@FoxOne.Business.NamingCenter.PARAM_KEY_NAME';
+            var formViewModeKey = '@FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE';
+            var id = $("#Id").val();
+            var tableName = $("#TableName").val();
+            var formViewMode = $("#" + formViewModeKey).val();
+            var param = {};
+            param[key] = tableName;
+            param[formViewModeKey] = formViewMode;
+            param['Id'] = id;
+            param['ReGenerate'] = 'true';
+            if (tableName == '') {
+                foxOne.alert("表名不能为空");
+                return;
+            }
+            window.location.href = foxOne.buildUrl('/PageDesigner/CRUDEdit', param);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <Id>1ff56495-07af-4698-bcfb-1dae7d888136</Id>
+    <RentId>1</RentId>
+    <Name>林大垄</Name>
+    <Code />
+    <Rank>0</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2017-07-08T11:16:08.833</LastUpdateTime>
+    <LoginId>lindalong</LoginId>
+    <DepartmentId>0da452de-8d4b-4884-ada4-da798ece4f41</DepartmentId>
+    <MobilePhone />
+    <QQ />
+    <Birthdate>2017-07-08T00:00:00</Birthdate>
+    <Sex />
+  </User>
+  <User>
+    <Id>a49f1152-8907-4174-8c17-de5c6701910b</Id>
+    <RentId>1</RentId>
+    <Name>刘海峰</Name>
+    <Code>liuhf</Code>
+    <Rank>0</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2017-07-08T10:57:58.543</LastUpdateTime>
+    <LoginId>liuhf</LoginId>
+    <Password>202CB962AC59075B964B07152D234B70</Password>
+    <DepartmentId>0da452de-8d4b-4884-ada4-da798ece4f41</DepartmentId>
+    <MobilePhone />
+    <QQ />
+    <Birthdate>2016-07-21T00:00:00</Birthdate>
+    <Sex />
+  </User>
+  <User>
+    <Id>fd2925df-151d-48d8-9c4c-fc145f103048</Id>
+    <RentId>1</RentId>
+    <Name>徐虹</Name>
+    <Code />
+    <Rank>0</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2017-07-08T11:15:48.79</LastUpdateTime>
+    <LoginId>xuhong</LoginId>
+    <DepartmentId>0da452de-8d4b-4884-ada4-da798ece4f41</DepartmentId>
+    <MobilePhone />
+    <QQ />
+    <Birthdate>2017-07-08T00:00:00</Birthdate>
+    <Sex />
+  </User>
+</ArrayOfUser>

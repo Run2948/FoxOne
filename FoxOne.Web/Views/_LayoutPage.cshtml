@@ -1,0 +1,419 @@
+﻿<!DOCTYPE html>
+<html>
+<head id="ctl00_ctl00_Head1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>
+        @ViewBag.Title
+    </title>
+    <meta name="description" content="nopCommerce is the open-source eCommerce solution. nopCommerce is available for free. It has everything you need to get started in selling physical and digital goods over the internet.">
+    <meta name="keywords" content="shopping cart, e-commerce, free shopping cart, ecommerce software, ecommerce solution, open-source ecommerce, ecommerce website, website ecommerce, open-source shopping cart, asp.net shopping cart">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Styles/front-end.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script>
+        /* public */
+        function getE(name) {
+            if (document.getElementById)
+                var elem = document.getElementById(name);
+            else if (document.all)
+                var elem = document.all[name];
+            else if (document.layers)
+                var elem = document.layers[name];
+            return elem;
+        }
+
+        function OpenWindow(query, w, h, scroll) {
+            var l = (screen.width - w) / 2;
+            var t = (screen.height - h) / 2;
+
+            winprops = 'resizable=0, height=' + h + ',width=' + w + ',top=' + t + ',left=' + l + 'w';
+            if (scroll) winprops += ',scrollbars=1';
+            var f = window.open(query, "_blank", winprops);
+        }
+
+
+        /*features tab */
+        (function ($) {
+            $.fn.featurelisttabs = function (options) {
+                // Default Values
+                var defaults = {
+                    activeIndex: 0
+                };
+                var options = $.extend(defaults, options);
+
+                // Main Plugin Code	 
+                return this.each(function () {
+                    var tabs = $(".feature-wrapper-tabs").children(); // all of the tabs
+                    var contents = $(".feature-wrapper-contents").children("li.content"); // all of the contents
+                    var arrowBlock = "<div class=\"arrow\">&nbsp;</div>";
+                    var activeIndex = defaults.activeIndex;
+
+                    // Initializing Code
+                    $(contents[defaults.activeIndex]).addClass("activecontent");
+                    $(tabs[activeIndex]).addClass("activetab").append(arrowBlock); // Set first tab and first content to active
+
+                    // Event Bindings
+                    $(".feature-wrapper-tabs a").click(function () {
+                        if (!$(this).parent().hasClass("activetab")) { // do nothing if the clicked tab is already the active tab
+                            activeIndex = $(this).parent().prevAll().length; // a clicked -> li -> previous siblings
+
+
+                            //switch content
+                            $(".feature-wrapper-tabs .activetab").removeClass("activetab");
+                            $('.feature-wrapper-tabs .arrow').remove();
+                            $(tabs[activeIndex]).addClass("activetab").append(arrowBlock); // Update tabs	
+                            $(".feature-wrapper-contents .activecontent").fadeOut(0).removeClass("activecontent");
+                            $(contents[activeIndex]).fadeIn(500).addClass("activecontent"); // Update content
+
+                            if (window.screen.availWidth < 769) {
+                                $('html, body').animate({
+                                    scrollTop: $($.attr(this, 'href')).offset().top
+                                }, 500);
+                            }
+                        }
+                        return false;
+                    });
+                });
+            };
+        })(jQuery);
+
+
+
+        (function ($) {
+
+            $.fn.backTop = function (options) {
+
+
+
+                var backBtn = this;
+
+                var settings = $.extend({
+                    'position': 400,
+                    'speed': 500,
+                    'color': 'white'
+                }, options);
+
+                //Settings
+
+                var position = settings['position'];
+                var speed = settings['speed'];
+
+                backBtn.css({
+                    'right': 40,
+                    'bottom': 40,
+                    'position': 'fixed'
+                });
+
+                $(document).scroll(function () {
+                    var pos = $(window).scrollTop();
+
+                    if (pos >= position) {
+                        backBtn.fadeIn(speed);
+                    } else {
+                        backBtn.fadeOut(speed);
+                    }
+                });
+
+                backBtn.click(function () {
+                    $("html, body").animate(
+                        { scrollTop: 0 },
+                        1000);
+                });
+            }
+
+        }(jQuery));
+    </script>
+</head>
+<body>
+        <!--[if lte IE 6]>
+                <style type="text/css">
+                #ie6msg{border:3px solid #090; margin:8px 0; background:#cfc; color:#000;}
+                #ie6msg h4{margin:8px; padding:0;}
+                #ie6msg p{margin:8px; padding:0;}
+                #ie6msg p a.getie8{font-weight:bold; color:#006;}
+                #ie6msg p a.ie6expl{font-weight:normal; color:#006;}
+                </style>
+                <div id="ie6msg">
+                <h4>Did you know that your browser is out of date?</h4>
+                <p>To get the best possible experience using our website we recommend that you upgrade your browser to a newer version. Download the latest version of <a class="getie8" href="http://www.microsoft.com/windows/internet-explorer/default.aspx">Internet Explorer</a>. The upgrade is free. If you're using a PC at work you should contact your IT administrator.</p>
+                <p>If you want to you may also try some other popular Internet browsers like <a class="ie6expl" href="http://getfirefox.com">Firefox</a>, <a class="ie6expl" href="http://www.opera.com">Opera</a>, or <a class="ie6expl" href="http://www.apple.com/safari/download/">Safari</a></p>
+                </div>
+                <![endif]-->
+        <!--[if gte IE 9]>
+                    <style type="text/css">
+                    .gradient {
+                        filter: none;
+                    }
+                    </style>
+            <![endif]-->
+        <div class="master-wrapper-page">
+            <div id="header" class="header">
+                <div class="header-logo">
+                    <a href="http://www.nopcommerce.com/">
+                        <img title="" alt="nopCommerce" src="~/images/logo.png">
+                    </a>
+                </div>
+                <div class="header-links">
+                    <div>
+                        <ul class="header-links-account">
+                            <li>
+                                <a href="http://www.nopcommerce.com/register.aspx" class="ico-register">
+                                    注册
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.nopcommerce.com/login.aspx" class="ico-login">
+                                    登录
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="header-links-general">
+                            <li class="users-online">
+                                <div>1164</div>
+                                users online
+                            </li>
+                            <li class="shopping-cart">
+                                <a href="http://www.nopcommerce.com/shoppingcart.aspx">(<strong>0</strong>)</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="header-menu">
+                <ul class="top-menu">
+                    <li>
+                        <a href="javascript:void(0);" class="default has-sub">产品</a>
+                        <ul class="sublist">
+                            <li><a href="http://www.nopcommerce.com/whatisnopcommerce.aspx">什么是FoxOne</a></li>
+                            <li><a href="http://www.nopcommerce.com/whychoose.aspx">为什么使用FoxOne</a></li>
+                            <li><a href="http://www.nopcommerce.com/featurelist.aspx">功能</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="default has-sub">下载</a>
+                        <ul class="sublist">
+                            <li><a href="http://www.nopcommerce.com/downloads.aspx">下载</a></li>
+                            <li><a href="http://www.nopcommerce.com/releasenotes.aspx">发布说明</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="default has-sub">支持 &amp; 服务</a>
+                        <ul class="sublist">
+                            <li><a href="http://docs.nopcommerce.com/" target="_blank">文档</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="default has-sub">关于我们</a>
+                        <ul class="sublist">
+                            <li><a href="http://www.nopcommerce.com/aboutus.aspx">关于我们</a></li>
+                            <li><a href="http://www.nopcommerce.com/ourteam.aspx">团队介绍</a></li>
+                            <li><a href="http://www.nopcommerce.com/contacts.aspx">联系我们</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="toggles">
+                    <div class="item-toggle menu-toggle"></div>
+                    <a class="item-toggle cart-toggle" href="http://www.nopcommerce.com/shoppingcart.aspx"></a>
+                    <div class="item-toggle account-toggle"></div>
+                </div>
+                <div class="menu-mobile-wrapper account-mobile-wrapper">
+                    <div class="mobile-menu-header">
+                        <div class="mobile-menu-back">&lt; Back</div>
+                        <div class="mobile-menu-close"></div>
+                    </div>
+                    <ul class="account-menu mobile">
+                        <li>
+                            <a href="http://www.nopcommerce.com/register.aspx" class="ico-register">
+                                Register
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://www.nopcommerce.com/login.aspx" class="ico-login">
+                                Log in
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="menu-mobile-wrapper top-menu-mobile-wrapper">
+                    <div class="mobile-menu-header">
+                        <div class="mobile-menu-back">&lt; Back</div>
+                        <div class="mobile-menu-close"></div>
+                    </div>
+                    <ul class="top-menu mobile">
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Product
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://www.nopcommerce.com/whatisnopcommerce.aspx">What is nopCommerce</a></li>
+                                <li><a href="http://www.nopcommerce.com/whychoose.aspx">Why nopCommerce</a></li>
+                                <li><a href="http://www.nopcommerce.com/featurelist.aspx">Features</a></li>
+                                <li><a href="http://www.nopcommerce.com/demo.aspx">Store demo</a></li>
+                                <li><a href="http://www.nopcommerce.com/showcaseliveshops.aspx">Showcase</a></li>
+                                <li><a href="http://www.nopcommerce.com/roadmap.aspx">Roadmap</a></li>
+                                <li><a href="http://www.nopcommerce.com/p/1/nopcommerce-copyright-removal-key.aspx">Copyright notice removal</a></li>
+                                <li><a href="http://www.nopcommerce.com/licensev3.aspx">License</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Downloads
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://www.nopcommerce.com/downloads.aspx">Download nopCommerce</a></li>
+                                <li><a href="http://www.nopcommerce.com/marketplace.aspx">Marketplace</a></li>
+                                <li><a href="http://www.nopcommerce.com/releasenotes.aspx">Release notes</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Support &amp; Services
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://docs.nopcommerce.com/" target="_blank">Documentation</a></li>
+                                <li><a href="http://www.nopcommerce.com/boards/">Community forums</a></li>
+                                <li>
+                                    <a href="http://www.nopcommerce.com/p/541/nopcommerce-premium-support-services.aspx">
+                                        Premium
+                                        support
+                                    </a>
+                                </li>
+                                <li><a href="http://www.nopcommerce.com/requestquote.aspx">Request a quote</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Community
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://www.nopcommerce.com/blog.aspx">Blog</a></li>
+                                <li><a href="http://www.nopcommerce.com/events.aspx">Events and webinars</a></li>
+                                <li><a href="http://www.nopcommerce.com/contribute.aspx">Contribute</a></li>
+                                <li><a href="http://www.nopcommerce.com/p/2127/certified-developer-program.aspx">Certified developer program</a></li>
+                                <li><a href="http://www.nopcommerce.com/mvp.aspx">MVP program</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Partners
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://www.nopcommerce.com/recommendedhosting.aspx">Recommended hosting</a></li>
+                                <li><a href="http://www.nopcommerce.com/solutionpartners.aspx">Solution partners</a></li>
+                                <li><a href="http://www.nopcommerce.com/technologypartners.aspx">Technology partners</a></li>
+                                <li><a href="http://www.nopcommerce.com/becomepartner.aspx">Become a partner</a></li>
+                                <li><a href="http://www.nopcommerce.com/advertise.aspx">Advertise with us</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="default">
+                                Company
+                                <div class="get-sublist">&gt;</div>
+                            </a>
+                            <ul class="sublist">
+                                <li><a href="http://www.nopcommerce.com/aboutus.aspx">About us</a></li>
+                                <li><a href="http://www.nopcommerce.com/ourteam.aspx">Meet our team</a></li>
+                                <li><a href="http://www.nopcommerce.com/careers.aspx">Careers</a></li>
+                                <li><a href="http://www.nopcommerce.com/contacts.aspx">Contact us</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    var h = 0;
+
+                    $('.menu-toggle').click(function () {
+                        $(this).parent().siblings('.top-menu-mobile-wrapper').slideToggle('slow');
+                    });
+                    $('.top-menu.mobile .sublist-toggle').click(function () {
+                        $(this).parent().siblings('.sublist').slideToggle('slow');
+                    });
+
+                    $('.account-toggle').click(function () {
+                        $(this).parent().siblings('.account-mobile-wrapper').slideToggle('slow');
+                    });
+                    $('.top-menu.mobile .sublist-toggle').click(function () {
+                        $(this).parent().siblings('.sublist').slideToggle('slow');
+                    });
+
+                    $('.top-menu.mobile .default').click(function () {
+                        $(this).siblings('.sublist').animate({ width: 'toggle' });
+                        h = $('.top-menu.mobile').height();
+                        $('.top-menu.mobile').animate({ height: $(this).siblings('.sublist').outerHeight() });
+                    });
+
+                    $('.top-menu-mobile-wrapper .mobile-menu-back').click(function () {
+                        if ($('.top-menu.mobile .sublist:visible').length > 0) {
+                            $('.top-menu.mobile .sublist:visible').animate({ width: 'toggle' });
+                            $('.top-menu.mobile').animate({ height: h });
+                        } else {
+                            $('.top-menu-mobile-wrapper').slideToggle('slow');
+                        }
+                    });
+
+                    $('.account-mobile-wrapper .mobile-menu-back').click(function () {
+                        $(this).closest('.account-mobile-wrapper').slideToggle('slow');
+                    });
+
+                    $('.mobile-menu-close').click(function () {
+                        $(this).closest('.menu-mobile-wrapper').slideToggle('slow');
+                    });
+                });
+            </script>
+            <div class="master-wrapper-content">
+                <div class="master-column-wrapper">
+                    <div class="center-1">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer-upper">
+                    <div>
+                        <div class="footer-block">
+                            <div class="title">
+                                信息
+                            </div>
+                            <ul>
+                                <li><a href="http://www.nopcommerce.com/featurelist.aspx">功能</a></li>
+                                <li><a href="http://www.nopcommerce.com/demo.aspx">DEMO</a></li>
+                                <li><a href="http://www.nopcommerce.com/downloads.aspx">下载</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-block follow-us">
+                            <div class="title">
+                                关注我们
+                            </div>
+                            <ul>
+                                <li class="facebook"><a href="https://www.facebook.com/nopCommerce" target="_blank" title="Facebook">QQ</a></li>
+                                <li class="twitter"><a href="https://twitter.com/nopcommerce" target="_blank" title="Twitter">微博</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-block">
+                            <div class="title">
+                                支持
+                            </div>
+                            <ul>
+                                <li><a href="http://docs.nopcommerce.com/" target="_blank">文档</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-lower">
+                    <div>
+                        <div class="footer-disclaimer">
+                            Copyright © 2015-2017 FoxHunter. All rights reserved. <a href="">隐私声明</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

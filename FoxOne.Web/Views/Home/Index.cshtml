@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="renderer" content="ie-stand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+</head>
+<body style="overflow: hidden">
+    <div class="container">
+        <div class="top">
+            <p class="logo">
+                <a href="javascript:goHome();">
+                    @*<img src="~/images/default/logo.png" border="0">*@
+                </a>
+            </p>
+            <div class="info">
+                <ul class="ul-1">
+                    <li class="user">
+                        <a class="info-btn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                            @FoxOne.Business.Security.Sec.User.Name
+                            <em></em>
+                        </a>
+                        <div class="ul-2 dropdown-menu" role="menu">
+                            <span>
+                                <img src="~/images/default/icon-point.png" border="0" />
+                            </span>
+                            <a href="javascript:void(0);">个人信息 </a>
+                            <a href="javascript:void(0);">更改密码</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="javascript:changePassword();" onclick="changePassword()" title="邮件">
+                            <img src="~/images/default/icon-email.png" border="0" width="13" height="14" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" title="帮助">
+                            <img src="~/images/default/icon-question.png" border="0" width="13" height="14" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Home/LogOut" title="退出">
+                            <img src="~/images/default/icon-out.png" border="0" width="13" height="14" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="navigation">
+            <div class="navigation-main">
+                <h3 class="navigation-title">功能菜单</h3>
+                <div class="navigation-content">
+                    <ul id="treeMenu" class="ztree ztree-menu"></ul>
+                    <ul id="navCollapse"></ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="nav-stretch" id="navStretch">
+            <a href="##" id="navButton" title="收缩菜单" onclick="closeboxleft(1);">&nbsp;</a>
+        </div>
+        <div class="main">
+            <div class="main-title">
+                <img src="~/images/default/icon-title.png" border="0">
+                <span id="spanTitle">基本信息</span>
+            </div>
+            <iframe id="mainFrame" width="100%" height="100%" onload="removeMainBlock();" scrolling="yes" frameborder="0"></iframe>
+        </div>
+        <div class="clear"></div>
+        <div class="bottom"></div>
+    </div>
+    <script type="text/javascript">
+        var curMenu = null, zTree_Menu = null, homeIndex = null;
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false,
+                dblClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                beforeClick: this.beforeClick,
+                onClick: this.onClick
+            }
+        };
+
+        function removeMainBlock() {
+            //$("#main-block-div").remove();
+        }
+
+        function showBlock(text) {
+            var height = $(".main-title").height() + $(".main").height();
+            if (!document.getElementById("main-block-div")) {
+                $(".main").append("<div id='main-block-div' style='position:absolute;top:0;left:0;background-color:#333;z-index:10000;filter: Alpha(Opacity=80, Style=0); -moz-opacity: 0.8; opacity: 0.80;width:100%;text-align:center;height:" + height + "px;' ><div style='background-color:white;padding:20px;position:absolute;top:45%;left:45%;font-weight:bold;font-size:13px;'> 正在加载[<span style='color:red;'>" + text + "</span>]</div></div>");
+            }
+        }
+
+        function beforeClick(treeId, node) {
+            if (node.isParent) {
+                if (node.level === 0 || node.level === 1) {
+                    var pNode = curMenu;
+                    while (pNode && pNode.level !== node.level) {
+                        pNode = pNode.getParentNode();
+                    }
+                    if (node.level === 0) {//当一级菜单时如下处理
+                        if (pNode !== node) {
+                            var a = $("#" + pNode.tId + "_a");
+                            a.removeClass("cur");
+                            zTree_Menu.expandNode(pNode, false);
+                        }
+                        a = $("#" + node.tId + "_a");
+                        a.addClass("cur");
+                    }
+                    else  {//当遇到非一级菜单时如下处理
+                        if (pNode && pNode !== node) {//原本是if (pNode !== node)   因为三级菜单时pNode为 null
+                            var a = $("#" + pNode.tId + "_a");
+                            a.removeClass("cur");
+                            zTree_Menu.expandNode(pNode, false);
+                        }
+                        a = $("#" + node.tId + "_a");
+                        a.addClass("cur");
+                    }
+
+                    var isOpen = false;
+                    for (var i = 0, l = node.children.length; i < l; i++) {
+                        if (node.children[i].open) {
+                            isOpen = true;
+                            break;
+                        }
+                    }
+                    if (isOpen) {
+                        zTree_Menu.expandNode(node, true);
+                        curMenu = node;
+                    } else {
+                        zTree_Menu.expandNode(node.children[0].isParent ? node.children[0] : node, true);
+                        curMenu = node.children[0];
+                    }
+                }
+                else {
+                    zTree_Menu.expandNode(node);
+                }
+            }
+            return !node.isParent;
+        }
+        function onClick(e, treeId, node) {
+            $("#spanTitle").html(node.name);
+            $("#mainFrame").attr("src", node.url);
+            //showBlock(node.name);
+            if (e) {
+                e.preventDefault();
+            }
+            return false;
+        }
+
+        $(document).ready(function () {
+            foxOne.dataService("/Home/GetMenu", {}, function (res) {
+                $.fn.zTree.init($("#treeMenu"), setting, res);
+                zTree_Menu = $.fn.zTree.getZTreeObj("treeMenu");
+                if (typeof (zTree_Menu.getNodes()[0].children) == "undefined") {
+                    curMenu = zTree_Menu.getNodes()[0];
+                }
+                else {
+                    curMenu = zTree_Menu.getNodes()[0].children[0];
+                }
+                homeIndex = curMenu;
+                onClick(null, "treeMenu", curMenu);
+                zTree_Menu.expandNode(curMenu.getParentNode(), true);
+            });
+        });
+
+        //导航nav折叠
+        function closeboxleft(v) {
+            if (v == 1) {
+                $(".navigation").fadeOut(300);
+                $("#navStretch").addClass("nav-stretch2");
+                $("#navStretch").html("<a id='navButton' title='展开菜单' onclick='closeboxleft(2);'></a>");
+                $(".main").animate({ left: "10" }, "0.4");
+                $(".main-title").animate({ left: "10" }, "0.4");
+
+            } else {
+                $(".navigation").fadeIn(300);
+                $("#navStretch").removeClass("nav-stretch2");
+                $(".main").animate({ left: "212px" }, "0.4");
+                $(".main-title").animate({ left: "212px" }, "0.4");
+                $("#navStretch").html("<a id='navButton' title='收起菜单' onclick='closeboxleft(1);' ></a>");
+            }
+        }
+
+        function goHome() {
+            onClick(null, "treeMenu", homeIndex);
+        }
+
+        function changePassword() {
+            var node = { name: '修改密码', pUrl: '/Home/ChangePassword' };
+            onClick(null, "treeMenu", node);
+        }
+    </script>
+</body>
+</html>

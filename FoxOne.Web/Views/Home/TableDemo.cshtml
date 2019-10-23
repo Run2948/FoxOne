@@ -1,0 +1,298 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="renderer" content="ie-stand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Scripts.Render("~/style/common.css")
+
+    <style>
+        h4 {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #0784de;
+        }
+
+        code {
+            padding: 2px 4px;
+            font-size: 90%;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            border-radius: 4px;
+        }
+
+        .demo-box {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #0784de;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 20px;">
+        <h4>基础表格</h4>
+        <p>给table添加<code>.table</code>即可，之后的条纹状表格（交替颜色）、带边框的表格、鼠标悬停表格使用class混合组成样式。</p>
+        <div class="demo-box" style="width: 600px">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>条纹状表格</h4>
+        <p>通过 <code>.table-striped</code> 类可以给 <code>&lt;tbody&gt;</code> 之内的每一行增加斑马条纹样式。</p>
+        <div class="demo-box" style="width: 600px">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <h4>带边框的表格</h4>
+        <p>添加 <code>.table-bordered</code> 类为表格和其中的每个单元格增加边框。</p>
+        <div class="demo-box" style="width: 600px">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <h4>鼠标悬停（hover效果）的表格</h4>
+        <p>通过添加 <code>.table-hover</code> 类可以让 <code>&lt;tbody&gt;</code> 中的每一行对鼠标悬停状态作出响应。</p>
+        <div class="demo-box" style="width: 600px">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>mdo</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>fat</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>twitter</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <h4>带状态效果类的表格</h4>
+        <p>通过tr或者td添加 对应的class可使td有不同的背景颜色</p>
+        <table class="table table-bordered table-striped" style="width: 632px;">
+            <colgroup>
+                <col width="30%">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Class</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>
+                        <code>.bg-active</code>
+                    </th>
+                    <td>鼠标悬停在行或单元格上时所设置的颜色</td>
+                </tr>
+                <tr>
+                    <th>
+                        <code>.bg-success</code>
+                    </th>
+                    <td>标识成功或积极的动作</td>
+                </tr>
+                <tr>
+                    <th>
+                        <code>.bg-info</code>
+                    </th>
+                    <td>标识普通的提示信息或动作</td>
+                </tr>
+                <tr>
+                    <th>
+                        <code>.bg-warning</code>
+                    </th>
+                    <td>标识警告或需要用户注意</td>
+                </tr>
+                <tr>
+                    <th>
+                        <code>.bg-danger</code>
+                    </th>
+                    <td>标识危险或潜在的带来负面影响的动作</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--带状态效果类的表格-->
+        <div class="demo-box" style="width: 600px">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Column heading</th>
+                        <th>Column heading</th>
+                        <th>Column heading</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-active">
+                        <th>1</th>
+                        <td>Column content</td>
+                        <td class="bg-danger">Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr class="bg-success">
+                        <th>3</th>
+                        <td>Column content</td>
+                        <td class="bg-info">Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr>
+                        <th>4</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr class="bg-active">
+                        <th>5</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr>
+                        <th>2</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td class="bg-warning">Column content</td>
+                    </tr>
+                    <tr class="bg-success">
+                        <th>6</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                    </tr>
+                    <tr>
+                        <th>7</th>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                        <td>Column content</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
+

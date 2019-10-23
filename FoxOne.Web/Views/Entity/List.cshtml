@@ -1,0 +1,105 @@
+﻿@model FoxOne.Web.Controllers.ListModel
+@using FoxOne.Business
+@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        html, body {
+            overflow: hidden;
+        }
+    </style>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script>
+        var tableId = '@Model.Table.Id';
+        $(function () {
+            foxOne.widget.init();
+            var listHeight = $(window).height();
+            $("[autoHeight]").siblings().each(function () {
+                listHeight -= ($(this).outerHeight() + 10);
+            });
+            $("[autoHeight]").css("height", listHeight).css("overflow-y", "scroll");
+        });
+
+        function exportToExcel() {
+            var setting = foxOne.widget.setting(tableId);
+            setting.id = tableId;
+            var url = foxOne.buildUrl("/Entity/ExportToExcel", setting);
+            window.open(url);
+        }
+
+        function showAddComponent() {
+            var param = foxOne.getQueryString();
+            
+            if (param && !param[foxOne.baseType]) {
+                param[foxOne.baseType] = "FoxOne.Controls.PageControlBase";
+            }
+            param[foxOne.formViewMode] = "Insert";
+            var url = foxOne.buildUrl('/PageDesigner/ComponentList', param, false);
+            $.modal({
+                url: url,
+                title: '@Html.Lang("Component_Editor")',
+                overlayClose: true,
+                onClose: function (res) {
+                    foxOne.widget.refresh(tableId);
+                },
+                width: 1100,
+                height: 650
+            });
+        }
+
+        function getFromDs() {
+            var url = foxOne.getQueryString();
+            var tableId = $("[widget='Table']").attr("id");
+            foxOne.dataService("/PageDesigner/GetTableColumn/" + url.parentId, { pageId: url.pageId }, function (res) {
+                if (res) {
+                    foxOne.widget.refresh(tableId);
+                }
+            });
+
+        }
+
+        function mergeColumn() {
+            var tableId = $("[widget='Table']").attr("id");
+            var ids = [];
+            var key = "";
+            $("#" + tableId).find(":checked").not("[checkAll]").each(function () {
+                var tr = $(this).closest("tr");
+                if (key == "") {
+                    key = tr.attr("data-key");
+                }
+                eval("var data = " + tr.attr("data"));
+                var id = data[key];
+                if (id && id != '') {
+                    ids.push(id);
+                }
+            });
+            if (ids.length <= 1) {
+                alert("请至少选择两列");
+                return;
+            }
+            var param = {};
+            param[foxOne.ctrlId] = ids.join(',');
+            param[foxOne.pageId] = $("[widget='Table']").attr("PageId");
+            foxOne.dataService("/PageDesigner/MergeTableColumn", param, function (res) {
+                if (res) {
+                    foxOne.widget.refresh(tableId);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        @Html.CustomControl(Model.Search)
+        @Html.CustomControl(Model.Toolbar)
+        @Html.CustomControl(Model.Table)
+    </div>
+</body>
+</html>

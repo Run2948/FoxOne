@@ -1,0 +1,85 @@
+﻿@model FoxOne.Web.Controllers.FormModel
+@using FoxOne.Controls
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>组件列表</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        textarea.xheditor {
+            height: 300px;
+            width: 60%;
+        }
+
+        .form-group textarea.form-control {
+            height: 100px;
+            width: 70%;
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 13px;
+            padding: 10px;
+            background-color: #EEE;
+            border-bottom: 1px solid #CCC;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        @Html.CustomControl(Model.Tab == null ? (Model.Form as FoxOne.Business.IComponent) : (Model.Tab as FoxOne.Business.IComponent))
+    </div>
+        @System.Web.Optimization.Scripts.Render("~/script/common.js")
+        @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script>
+        $(function () {
+            $("form").bind("submit", function () {
+                if ($.validation.validate(this).isError) {
+                    return false;
+                }
+                $(this).find("[disabled]").removeAttr("disabled");
+                foxOne.dataService($(this).attr("action"), $(this).serialize(), function (res) {
+                    if (res) {
+                        alert("保存成功！！");
+                        if (window.location.href.indexOf(foxOne.ctrlId) >= 0) {
+                            window.location.href = window.location.href;
+                        }
+                        else {
+                            var index = window.location.href.indexOf('?');
+                            var url = window.location.href.substring(0, index);
+                            var param = {};
+                            param[foxOne.ctrlId] = res;
+                            param[foxOne.pageId] = foxOne.getQueryString()[foxOne.pageId];
+                            window.location.href = foxOne.buildUrl(url, param);
+                        }
+                    }
+                }, "post", false);
+                return false;
+            });
+            autoHeight();
+            $(window).resize(autoHeight);
+            $("[description]").each(function () {
+                if ($(this).attr("description") != '') {
+                    $(this).append("<img alt='' title='" + $(this).attr("description") + "' src=\"../../Content/themes/default/images/icon-tip.png\" />");
+                }
+            });
+        });
+
+        function autoHeight() {
+            var screenHeight = Math.min($(window).height(), $(document).height());
+            var toolbarHeight = 0;
+            var ulHeight = screenHeight - toolbarHeight;
+            if ($(".tab-box").length == 1) {
+                ulHeight -= $(".tab-box").outerHeight();
+                $("[tabItem]").css("height", ulHeight + toolbarHeight).css("overflow-y", "auto");
+            }
+        }
+    </script>
+</body>
+</html>

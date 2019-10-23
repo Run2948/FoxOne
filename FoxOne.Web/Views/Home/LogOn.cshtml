@@ -1,0 +1,201 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="renderer" content="ie-stand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus {
+            box-shadow: 0 0 0 60px #fff inset;
+            -webkit-text-fill-color: #333;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        html, body {
+            background-color: #CCC;
+        }
+
+        .container {
+            margin: auto;
+            margin-top: 150px;
+            text-align: center;
+            width: 310px;
+        }
+
+        .login-box {
+            width: 302px;
+            height: 400px;
+            background: url(../../images/login-box-bg.png) no-repeat;
+        }
+
+            .login-box form {
+                padding-top: 85px;
+            }
+
+        .form-group {
+            width: 80%;
+            margin: 0 auto 30px auto;
+        }
+
+            .form-group input:focus {
+                border: 1px solid #24A2DD;
+                box-shadow: 0 0 6px rgba(0,0,0,.3) inset;
+                outline: none;
+            }
+
+        .user {
+            display: block;
+            width: 100%;
+            padding: 13px 0;
+            line-height: inherit;
+            text-indent: 15px;
+            background: #fff;
+            border: solid 1px #c4c4c4;
+            font-size: 14px;
+            border-radius: 3px;
+            color: #454545;
+        }
+
+        .user-icon {
+            position: absolute;
+            bottom: 14px;
+            right: 10px;
+            display: inline-block;
+            height: 14px;
+            background: url(../../images/icon1.png) no-repeat center;
+            width: 14px;
+        }
+
+        .passw-icon {
+            position: absolute;
+            bottom: 14px;
+            right: 10px;
+            display: inline-block;
+            height: 14px;
+            background: url(../../images/icon2.png) no-repeat center;
+            width: 12px;
+        }
+
+        .btn-login {
+            display: block;
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            font-family: 'Microsoft YaHei';
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,.5);
+            text-align: center;
+            border: solid 1px #4d9bcd;
+            cursor: pointer;
+            -moz-border-radius: 3px;
+            -khtml-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            border: 1px solid #4cae4c;
+            background-color: #5cb85c;
+            *background-color: #5cb85c;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+        }
+
+            .btn-login:hover, btn-login:focus {
+                background: #5cb85c;
+                border: solid 1px #045A82;
+                outline: none;
+            }
+
+            .btn-login img {
+                margin: 0;
+            }
+
+        .submit-box {
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            color: #fd2400;
+            font-size: 12px;
+            padding-right: 10px;
+        }
+
+        .support {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 60px;
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Microsoft YaHei';
+        }
+
+            .footer p {
+                margin: 0 0 10px 0;
+            }
+    </style>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            @using (Html.BeginForm())
+            {
+
+                <div class="form-group">
+                    <em class="user-icon"></em>
+                    <input type="text" class="form-control user" id="userName" name="userName" value="liuhf" placeholder="@Html.Lang("UserName")" />
+                </div>
+                <div class="form-group">
+                    <em class="passw-icon "></em>
+                    <input type="password" class="form-control user" id="password" name="password" value="123" placeholder="@Html.Lang("Password")" />
+                </div>
+                <div class="form-group submit-box">
+                    <button type="submit" id="login-submit" class="btn btn-login">@Html.Lang("LogOn")</button>
+                </div>
+                <div class="form-group"><span class="error-message"><a style="color:red;" href="/Init/Index">首次运行请点此进行系统初始化</a></span></div>
+                <div class="form-group error-box">
+                    <span class="error-message">@ViewData["ErrorMessage"]</span>
+                </div>
+            }
+
+        </div>
+
+        <div class="footer">
+            <p>&copy;Power by liuhf</p>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onload = function () {
+            if (window.top != self) {
+                window.top.location.href = "/Home/LogOn";
+            }
+            document.getElementById('userName').focus();
+        }
+
+    </script>
+</body>
+</html>

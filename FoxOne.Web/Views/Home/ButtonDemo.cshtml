@@ -1,0 +1,154 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="renderer" content="webkit" />
+    <meta name="renderer" content="ie-stand" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+
+    <style>
+        h4 {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #0784de;
+        }
+
+        code {
+            padding: 2px 4px;
+            font-size: 90%;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            border-radius: 4px;
+        }
+
+        .demo-box {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #0784de;
+            border-radius: 3px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin: 20px;">
+        <h4>按钮</h4>
+        <p>为 <code>&lt;a&gt;</code>、<code>&lt;button&gt;</code> 或 <code>&lt;input&gt;</code> 元素添加按钮类<code>.btn</code> <code>.btn-default</code>。</p>
+        <div class="demo-box">
+            <a class="btn btn-default" href="#" role="button">Link</a>
+            <button class="btn btn-default" type="submit">Button</button>
+            <input class="btn btn-default" type="button" value="Input">
+            <input class="btn btn-default" type="submit" value="Submit">
+        </div>
+
+
+        <h4>预定义样式</h4>
+        <p>为 <code>.btn .btn-default</code>默认、<code>.btn .btn-primary</code>首选项（或者search） 、 <code>.btn .btn-success</code>成功  、 <code>.btn .btn-info</code>信息 、  <code>.btn .btn-warning</code>警告 、 <code>.btn .btn-danger</code>危险 、 <code>.btn .btn-link</code>链接、<code>.btn .btn-block</code>块级（充满整个容器）。</p>
+        <div class="demo-box">
+            <button type="button" class="btn btn-default">（默认样式）Default</button>
+            <button type="button" class="btn btn-primary">（首选项）Primary</button>
+            <button type="button" class="btn btn-success">（成功）Success</button>
+            <button type="button" class="btn btn-info">（一般信息）Info</button>
+            <button type="button" class="btn btn-warning">（警告）Warning</button>
+            <button type="button" class="btn btn-danger">（危险）Danger</button>
+            <button type="button" class="btn btn-link">（链接）Link</button>
+        </div>
+
+        <h4>大小</h4>
+        <p>为 <code>.btn-lg</code>大、<code>不加大小</code>默认、<code>.btn-sm</code>小、<code>.btn-xs</code>超小</p>
+        <div class="demo-box">
+            <p>
+                <button type="button" class="btn btn-primary btn-lg">（大按钮）Large button</button>
+                <button type="button" class="btn btn-default btn-lg">（大按钮）Large button</button>
+            </p>
+            <p>
+                <button type="button" class="btn btn-primary">（默认尺寸）Default button</button>
+                <button type="button" class="btn btn-default">（默认尺寸）Default button</button>
+            </p>
+            <p>
+                <button type="button" class="btn btn-primary btn-sm">（小按钮）Small button</button>
+                <button type="button" class="btn btn-default btn-sm">（小按钮）Small button</button>
+            </p>
+            <p>
+                <button type="button" class="btn btn-primary btn-xs">（超小尺寸）Extra small button</button>
+                <button type="button" class="btn btn-default btn-xs">（超小尺寸）Extra small button</button>
+            </p>
+
+            <p>
+                <button type="button" class="btn btn-primary btn-xs">（超小尺寸）Extra small button</button>
+                <button type="button" class="btn btn-default btn-xs">（超小尺寸）Extra small button</button>
+            </p>
+            <div style="max-width: 400px; margin: 5px 0; padding: 10px; background: #eee;">
+                <button type="button" class="btn btn-primary btn-lg btn-block">（块级元素）Block level button</button>
+                <button type="button" class="btn btn-default btn-lg btn-block">（块级元素）Block level button</button>
+            </div>
+        </div>
+
+
+        <h4>状态</h4>
+        <div class="demo-box">
+            <p><code>.active</code>激活</p>
+            <p class="bs-example" data-example-id="active-anchor-btns">
+                <a href="#" class="btn btn-primary active" role="button">Primary link</a>
+                <a href="#" class="btn btn-default active" role="button">Link</a>
+            </p>
+
+            <p>为 <code>&lt;button&gt;</code>、<code>&lt;input&gt;</code> 元素添加 <code>disabled</code> 属性，使其表现出禁用状态。</p>
+            <p>
+                <button type="button" class="btn btn-primary" disabled="disabled">Primary button</button>
+                <button type="button" class="btn btn-default" disabled="disabled">Button</button>
+                <input type="submit" class="btn btn-default" disabled="disabled" value="Submit" />
+            </p>
+
+            <p>为基于 <code>&lt;a&gt;</code> 元素创建的按钮添加 <code>.disabled</code> 类。</p>
+            <p>
+                <a href="#" class="btn btn-primary  disabled" role="button">Primary link</a>
+                <a href="#" class="btn btn-default disabled" role="button">Link</a>
+            </p>
+        </div>
+
+        <h4>按钮组（适用于search栏下面的操作按钮）</h4>
+        <p>为包含的按钮添加一个class为<code>.btn-group</code>的div</p>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">Left</button>
+            <button type="button" class="btn btn-default">Middle</button>
+            <button type="button" class="btn btn-default">Right</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary"><i class="Hui-iconfont">&#xe600;</i> 新增</button>
+            <button type="button" class="btn btn-default"><i class="Hui-iconfont">&#xe6a1;</i> 删除</button>
+            <button type="button" class="btn btn-default"><i class="Hui-iconfont">&#xe644;</i> 导出</button>
+        </div>
+
+
+        <h4>转为input定制的button，其实button也有type="submit" 功能，能不能直接使用button替代input呢，这样会比较灵活（input加图标基本固定）</h4>
+        <p>在btn的基础上加上背景图标class</p>
+
+        <div class="demo-box">
+            <input class="btn btn-primary search-button" type="button" value="search-button">
+            <input class="btn btn-primary add-button" type="button" value="add-button">
+            <input class="btn btn-default delete-button" type="button" value="delete-button">
+            <input class="btn btn-primary copy-button" type="button" value="copy-button">
+            <input class="btn btn-default editor-button" type="button" value="editor-button">
+            <input class="btn btn-default delete-button" type="button" value="delete-button">
+            <input class="btn btn-default search-button-d" type="button" value="查询">
+            <input class="btn btn-default icon-add-d" type="button" value="添加">
+            <input class="btn btn-default icon-delete-d" type="button" value="删除">
+            <input class="btn btn-default icon-copy-d" type="button" value="复制">
+            <input class="btn btn-default editor-button-d" type="button" value="编辑">
+            <input class="btn btn-default delete-button-d" type="button" value="删除">
+        </div>
+
+    </div>
+</body>
+</html>
+

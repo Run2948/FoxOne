@@ -1,0 +1,200 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+
+    <style>
+        html, body {
+            overflow: hidden;
+        }
+
+        .repeater-item {
+            border: 1px solid #CCC;
+            background-color: #EEE;
+            padding: 10px;
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 150px;
+            height: 150px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: left;
+        }
+
+            .repeater-item p {
+                border-bottom: 1px dashed #CCC;
+                font-weight: bold;
+                padding-bottom: 5px;
+            }
+
+        .repeater-item-checked {
+            background: white url(../../images/default/success.png) 140px 5px no-repeat;
+        }
+
+        .repeater-item-checked-lock {
+            background: #EEEFFF url(../../images/default/success.png) 140px 5px no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div id="tabContainer" widget="Tab" initindex="0">
+            <div id="tabHeader" class="tab-box"></div>
+        </div>
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script type="text/javascript">
+        var urlParameter = foxOne.getQueryString();
+        var postData = { RoleId: urlParameter.roleid, Id: '', Action: 'Get' };
+        var RolePermission = "/Permission/RoleTypePermission";
+        var getPermission = "/Permission/Get";
+        entityName = "Permission";
+        var roleTypeId = "";
+        function autoHeight() {
+            var listHeight = $(window).height() - $(".tab-box").outerHeight();
+            $("[tabItem]").css("height", listHeight).css("overflow-y", "auto");
+        }
+        $(function () {
+            $(window).bind("resize", autoHeight);
+            if (urlParameter.type == "role") {
+                RolePermission = "/Permission/RolePermission";
+            }
+            foxOne.dataService(getPermission, {}, function (res) {
+                if (res && res.length > 0) {
+                    var template = "<div id=\"{Id}\" class=\"repeater-item\"><p>{Name}</p><ul></ul></div>";
+                    var liTemplate = "<li><input type='checkbox' id='{Id}'>&nbsp;<label>{Name}</label></li>";
+                    var tabContainerTemplate = "<div tabItem='{Id}' id=\"{Id}\"></div>";
+                    var spanTemplate = "<span key=\"{Id}\" class=\"tab-item\">{Name}</span>";
+                    var ruleTemplate = "<br /><input type='radio' disabled='disabled' style='margin-left:15px;' name='{ParentId}' id='{Id}' />&nbsp;<label>{Name}</label>";
+                    $.each(res, function () {
+                        switch (this.Type) {
+                            case 0:
+                                $("#tabContainer").append(foxOne.modelViewBinder(this, tabContainerTemplate));
+                                $("#tabHeader").append(foxOne.modelViewBinder(this, spanTemplate));
+                                break;
+                            case 1:
+                                $("#" + this.ParentId).append(foxOne.modelViewBinder(this, template));
+                                break;
+                            case 2:
+                                $("#" + this.ParentId).find("ul").append(foxOne.modelViewBinder(this, liTemplate));
+                                break;
+                            case 3:
+                                $(foxOne.modelViewBinder(this, ruleTemplate)).insertAfter($("#" + this.ParentId).next("label"));
+                                break;
+                        }
+                    });
+                    $("#tabContainer").find(".tab-item").eq(0).click();
+                    autoHeight();
+                    if (urlParameter.type == "role") {
+                        //如果是给角色分配权限，先加载此角色对应的角色类型的权限，并把相关权限设为不允许修改。
+                        foxOne.dataService("/Permission/RoleTypePermission", postData, function (res) {
+                            if (res && res.length > 0) {
+                                $.each(res, function () {
+                                    if (this.Type > 1) {
+                                        $("#" + this.Id).attr("checked", true).attr("disabled", true);
+                                    }
+                                    else {
+                                        $("#" + this.Id).addClass("repeater-item-checked-lock");
+                                    }
+                                });
+                            }
+                        }, "post", false);
+                    }
+                    foxOne.dataService(RolePermission, postData, function (res) {
+                        if (res && res.length > 0) {
+                            $.each(res, function () {
+                                if (this.Type > 1) {
+                                    $("#" + this.Id).attr("checked", true);
+                                    $("input[name='" + this.Id + "']").attr("disabled", false);
+                                }
+                                else {
+                                    $("#" + this.Id).addClass("repeater-item-checked");
+                                }
+                            });
+                        }
+                    });
+                    $(".repeater-item").bind("click", function (e) {
+                        if ($(this).hasClass("repeater-item-checked-lock")) {
+                            e.stopPropagation();
+                            return;
+                        }
+                        if ($(this).hasClass("repeater-item-checked")) {
+                            var ids = [];
+                            ids.push(this.id);
+                            $(this).find(":checked").each(function () {
+                                ids.push(this.id);
+                                this.checked = false;
+                            });
+                            $(this).find("input[type='radio']").attr("disabled", true);
+                            postData.Id = ids.join(',');
+                            postData.Action = "Remove";
+                            var div = $(this);
+                            foxOne.dataService(RolePermission, postData, function (r) {
+                                if (r) {
+                                    div.removeClass("repeater-item-checked");
+                                }
+                            });
+                        }
+                        else {
+                            $(this).find("input[type='checkbox']").each(function () {
+                                postData.Id = this.id;
+                                postData.Action = "Add";
+                                this.checked = true;
+                                foxOne.dataService(RolePermission, postData);
+                            });
+                            $(this).find("input[type='radio']").attr("disabled", false);
+                            postData.Id = this.id;
+                            postData.Action = "Add";
+                            var div = $(this);
+                            foxOne.dataService(RolePermission, postData, function (r) {
+                                if (r) {
+                                    div.addClass("repeater-item-checked");
+                                }
+                            });
+                        }
+                    });
+                    $(".repeater-item").find("input[type='checkbox']").bind("click", function (e) {
+                        postData.Id = this.id;
+                        if (this.checked) {
+                            postData.Action = "Add";
+                            foxOne.dataService(RolePermission, postData);
+                            $("input[name='" + postData.Id + "']").attr("disabled", false);
+                        }
+                        else {
+                            postData.Action = "Remove";
+                            $("input[name='" + postData.Id + "']").attr("disabled", true);
+                            foxOne.dataService(RolePermission, postData, function (res) {
+                                if (res) {
+                                    $("input[name='" + postData.Id + "']").attr("checked", false);
+                                }
+                            }, "post", true);
+                        }
+                        if ($(this).closest(".repeater-item").hasClass("repeater-item-checked")) {
+                            e.stopPropagation();
+                        }
+                    });
+                    $(".repeater-item").find("input[type='radio']").bind("click", function (e) {
+                        //postData.Id = this.name;
+                        postData.Id = this.id;
+                        foxOne.dataService(removeRolePermission, postData, function () { }, "post", false);
+                        foxOne.dataService(addRolePermission, postData, function (res) {
+                            if (res) {
+                                delete postData.PermissionRuleId;
+                            }
+                        }, "post", false);
+                        if ($(this).closest(".repeater-item").hasClass("repeater-item-checked")) {
+                            e.stopPropagation();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

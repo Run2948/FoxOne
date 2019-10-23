@@ -1,0 +1,111 @@
+﻿@{Layout = null;}
+@using FoxOne.Business
+@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <style>
+        html, body {
+            background-color: #EEE;
+        }
+
+        fieldset {
+            width: 700px;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #CCC;
+            vertical-align: middle;
+            background-color: white;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        legend {
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center;width:100%;">
+        <fieldset>
+            <legend>导出</legend>
+            <form action="/PageDesigner/BatchExport" method="post" id="exportForm">
+                <input type="text" id="LastUpdateTime" name="LastUpdateTime" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                <button onclick="batchExport()" class="btn btn-success btn-big">按更新时间批量导出</button>
+                <button onclick="exportPage(); return false;" class="btn btn-success btn-big">导出当前配置</button>
+                <button onclick="exportSystem(); return false;" class="btn btn-success btn-big">导出系统</button>
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend>导入</legend>
+            <form action="/PageDesigner/Import" id="importForm" method="post" enctype="multipart/form-data">
+                <input type="file" id="xmlFile" name="xmlFile" />
+                <input onclick="Import()" type="button" class="btn btn-danger btn-big" value="导入XML" />
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend>其它</legend>
+            <button onclick="saveCopy()" class="btn btn-primary btn-big">另存副本</button>
+            <button onclick="addToFunction()" class="btn btn-primary btn-big">发布到功能管理</button>
+            <button onclick="clearCache()" class="btn btn-primary btn-big">清除页面缓存</button>
+        </fieldset>
+        <div id="divToUpdate" style="visibility:hidden"></div>
+    </div>
+    <script>
+        @{ var page = ViewData["page"] as FoxOne.Business.PageEntity;
+
+              }
+
+        var pageId = '@page.Id';
+        var pageTitle = '@page.Title';
+
+        function saveCopy() {
+            foxOne.dataService("/PageDesigner/Copy", { id: pageId }, function (res) {
+                if (res) {
+                    alert("复制成功");
+                }
+            }, "post", true);
+        }
+
+        function addToFunction() {
+            var url = "/Page/PermissionEdit";
+            var param = { Type: 1, Name: pageTitle, Code: pageId, Url: '/Page/' + pageId };
+            url = foxOne.buildUrl(url, param);
+            $.modal({
+                url: url,
+                onClose: function (res) {
+                    if (res != 'false') {
+                        alert("添加成功！");
+                    }
+                },
+                width: 700,
+                height: 500,
+                overlayClose: true
+            });
+        }
+
+        function clearCache() {
+            foxOne.dataService("/PageDesigner/CleanCache", { id: pageName }, function (res) {
+                if (res) {
+                    alert("清除成功!");
+                }
+                else {
+                    alert("页面未缓存！")
+                }
+            }, "post", true);
+        }
+
+        function exportSystem() {
+            window.open("/PageDesigner/ExportSystem");
+        }
+    </script>
+</body>
+</html>

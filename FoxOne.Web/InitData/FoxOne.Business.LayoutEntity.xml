@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ArrayOfLayoutEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LayoutEntity>
+    <Id>Normal</Id>
+    <RentId>1</RentId>
+    <Title>普通布局</Title>
+    <Html>&lt;div layout="Right"&gt;$Right$&lt;/div&gt;</Html>
+    <StartUpScript />
+    <LastUpdateTime>2016-07-22T16:55:50.447</LastUpdateTime>
+  </LayoutEntity>
+  <LayoutEntity>
+    <Id>RightLeft</Id>
+    <RentId>0</RentId>
+    <Title>左窄右宽布局</Title>
+    <Html>&lt;div class="treeform-left" data-options="region:'west',split:true" title="树型菜单" style="width: 220px;" layout="Left"&gt;$Left$&lt;/div&gt;&lt;div data-options="region:'center'" style="overflow-y:hidden;" class="main-container" layout="Right"&gt;$Right$&lt;/div&gt;</Html>
+    <StartUpScript />
+    <Style />
+    <LastUpdateTime>2016-08-04T09:22:21.667</LastUpdateTime>
+  </LayoutEntity>
+</ArrayOfLayoutEntity>

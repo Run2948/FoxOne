@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+<ArrayOfPageEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PageEntity>
+    <Id>CRUDEntityList</Id>
+    <RentId>1</RentId>
+    <Title>增删改查列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:52.303</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>DataDictionaryEdit</Id>
+    <RentId>0</RentId>
+    <Title>数据字典编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-03T14:46:35.29</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>DataDictionaryList</Id>
+    <RentId>0</RentId>
+    <Title>数据字典列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>RightLeft</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-08T17:07:35.51</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>DepartmentEdit</Id>
+    <RentId>1</RentId>
+    <Title>组织信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:54.053</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>DepartmentList</Id>
+    <RentId>0</RentId>
+    <Title>组织信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <StartUpScript>$("#DepartmentListTree").bind("nodeClick",function(e){
+var setting=foxOne.setting("DepartmentListTable");
+setting.ParentId=e.id;
+foxOne.refresh("DepartmentListTable");
+});</StartUpScript>
+    <LayoutId>RightLeft</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-03T15:29:51.963</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>DepartmentSelector</Id>
+    <RentId>0</RentId>
+    <Title>组织选择器</Title>
+    <CssClass>easyui-layout</CssClass>
+    <StartUpScript>$("#DepartmentSelectorTree").bind("nodeClick",function(e){
+var param=foxOne.getQueryString();
+$("#"+param._input_id,window.parent.document).val(e.id);
+$("#"+param._input_text,window.parent.document).val(e.name);
+});</StartUpScript>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Selector</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-04T15:23:36.093</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>ExternalFileEntityEdit</Id>
+    <RentId>1</RentId>
+    <Title>外置文件编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:55.607</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>ExternalFileEntityList</Id>
+    <RentId>1</RentId>
+    <Title>外置文件列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:55.853</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>LayoutEntityEdit</Id>
+    <RentId>1</RentId>
+    <Title>布局信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:56.367</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>LayoutEntityList</Id>
+    <RentId>1</RentId>
+    <Title>布局信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:56.61</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PageEntityList</Id>
+    <RentId>1</RentId>
+    <Title>页面信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:57.51</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PageLayoutFileEntityEdit</Id>
+    <RentId>1</RentId>
+    <Title>页面外置文件编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:58.17</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PageLayoutFileEntityList</Id>
+    <RentId>1</RentId>
+    <Title>页面外置文件列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:58.403</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PermissionEdit</Id>
+    <RentId>1</RentId>
+    <Title>权限信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:58.853</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PermissionList</Id>
+    <RentId>0</RentId>
+    <Title>权限信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <StartUpScript>$("#PermissionListTree").bind("nodeClick",function(e){
+var setting=foxOne.setting("PermissionListTable");
+setting.ParentId=e.id;
+foxOne.refresh("PermissionListTable");
+});</StartUpScript>
+    <LayoutId>RightLeft</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-01T14:13:22.97</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>PermissionSelector</Id>
+    <RentId>0</RentId>
+    <Title>权限选择器</Title>
+    <CssClass>easyui-layout</CssClass>
+    <StartUpScript>$("#PermissionSelectorTree").bind("nodeClick",function(e){
+var param=foxOne.getQueryString();
+$("#"+param._input_id,window.parent.document).val(e.id);
+$("#"+param._input_text,window.parent.document).val(e.name);
+});</StartUpScript>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Selector</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-05T09:09:36.617</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>RoleEdit</Id>
+    <RentId>1</RentId>
+    <Title>角色信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:55:59.937</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>RoleList</Id>
+    <RentId>1</RentId>
+    <Title>角色信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:56:00.17</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>RoleTypeEdit</Id>
+    <RentId>1</RentId>
+    <Title>角色类型信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:56:01.303</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>RoleTypeList</Id>
+    <RentId>1</RentId>
+    <Title>角色类型信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:56:01.637</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>Selector</Id>
+    <RentId>0</RentId>
+    <Title>页面选择器</Title>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Root</ParentId>
+    <Type>Module</Type>
+    <LastUpdateTime>2016-08-03T15:35:40.273</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>UserEdit</Id>
+    <RentId>1</RentId>
+    <Title>用户信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:56:02.773</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>UserList</Id>
+    <RentId>0</RentId>
+    <Title>用户信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <StartUpScript>$("#UserListTree").bind("nodeClick",function(e){
+var setting=foxOne.setting("UserListTable");
+setting.DepartmentId=e.id;
+foxOne.refresh("UserListTable");
+});</StartUpScript>
+    <LayoutId>RightLeft</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-08-03T18:14:52.723</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>UserRoleEdit</Id>
+    <RentId>1</RentId>
+    <Title>用户角色信息编辑</Title>
+    <CssClass>easyui-layout</CssClass>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2016-07-22T16:56:04.017</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>UserRoleList</Id>
+    <RentId>1</RentId>
+    <Title>用户角色信息列表</Title>
+    <CssClass>easyui-layout</CssClass>
+    <ScriptBlock>function showAddUserRole(){
+var param=foxOne.getQueryString();
+$.modal({url:'/Page/UserSelector?RoleId='+param.RoleId,width:800,height:500,overlayClose:true,title:'添加角色用户',onClose:function(){
+foxOne.refresh("UserRoleListTable");
+}});
+}</ScriptBlock>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>X</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2017-01-12T18:23:55.277</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>UserSelector</Id>
+    <RentId>1</RentId>
+    <Title>人员选择器</Title>
+    <CssClass>easyui-layout</CssClass>
+    <Style>        .user-item {
+            border: 1px solid #CCC;
+            background-color: #EEE;
+            padding: 10px;
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 150px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: left;
+        }
+
+            .user-item p {
+                border-bottom: 1px dashed #CCC;
+                font-weight: bold;
+                padding-bottom: 5px;
+            }
+
+        .user-item-checked {
+            background: white url(../../images/default/success.png) 140px 5px no-repeat;
+        }
+
+        .user-item-checked-lock {
+            background: #EEEFFF url(../../images/default/success.png) 140px 5px no-repeat;
+        }</Style>
+    <StartUpScript>$("#UserSelectorTree").bind("nodeClick",function(e){
+var setting=foxOne.setting("UserSelectorRepeater");
+setting.DepartmentId=e.id;
+foxOne.refresh("UserSelectorRepeater");
+});
+
+$("body").on("click",".user-item",function(e){
+var div=$(e.target).closest(".user-item");
+var hasClass = div.hasClass("user-item-checked");
+var d=$(this).data();
+var param=foxOne.getQueryString();
+foxOne.dataService("/Entity/UserRole",{UserId:d.id,RoleId:param.RoleId,Add:!hasClass},function(res){
+if(hasClass){
+div.removeClass("user-item-checked");
+}
+else{
+div.addClass("user-item-checked");
+}
+});
+//$("#"+param._input_id,window.parent.document).val(d.id);
+//$("#"+param._input_text,window.parent.document).val(d.name);
+});</StartUpScript>
+    <LayoutId>RightLeft</LayoutId>
+    <ParentId>Selector</ParentId>
+    <Type>Page</Type>
+    <LastUpdateTime>2017-01-12T18:25:06.393</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>X</Id>
+    <RentId>0</RentId>
+    <Title>系统管理</Title>
+    <LayoutId>Normal</LayoutId>
+    <ParentId>Root</ParentId>
+    <Type>Module</Type>
+    <LastUpdateTime>2016-08-03T14:42:33.513</LastUpdateTime>
+  </PageEntity>
+  <PageEntity>
+    <Id>Y</Id>
+    <RentId>1</RentId>
+    <Title>应用设计</Title>
+    <CssClass />
+    <LayoutId />
+    <ParentId>Root</ParentId>
+    <Type>Module</Type>
+    <LastUpdateTime>2016-07-22T16:55:50.777</LastUpdateTime>
+  </PageEntity>
+</ArrayOfPageEntity>

@@ -1,0 +1,118 @@
+﻿@model FoxOne.Business.PageEntity
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        .form-horizontal textarea.form-control {
+            height: 300px;
+            width: 98%;
+        }
+
+        .ti {
+            padding: 15px;
+            padding-bottom: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <form action="/PageDesigner/PageEdit" method="post" class="form-horizontal" enctype="multipart/form-data">
+            @Html.Hidden(FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE, ViewData[FoxOne.Business.NamingCenter.PARAM_FORM_VIEW_MODE])
+            <div widget="Tab" initindex="0">
+                <div class="tab-box">
+                    <span key="baseInfo" class="tab-item">基本信息</span>
+                    <span key="StartUpScript" class="tab-item">页面起始JS</span>
+                    <span key="ScriptBlock" class="tab-item">页面JS定义</span>
+                    <span key="Style" class="tab-item">页面Style</span>
+                    <input class="btn btn-success btn-big" id="btnSubmit" style="margin-left:30px;" type="submit" value="保存" />
+                </div>
+                <div tabitem="baseInfo" class="ti">
+
+                    <div class="form-group">
+                        <label for="Id">页面地址：</label>
+                        <input class="form-control" id="Id" name="Id" validator="required" type="text" value="@Model.Id" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Title">页面标题：</label>
+                        <input class="form-control" id="Title" name="Title" validator="required" type="text" value="@Model.Title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CssClass">页面CssClass：</label>
+                        <input class="form-control" id="CssClass" name="CssClass" type="text" value="@Model.CssClass" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Service">页面服务类：</label>
+                        @Html.DropDownList("Service", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="LayoutId">页面布局类型：</label>
+                        @Html.DropDownList("LayoutId", null, new { @class = "form-control", validator = "required" })
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ParentId">页面所属父级：</label>
+                        @Html.DropDownList("ParentId", null, new { @class = "form-control", validator = "required" })
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Type">页面类型：</label>
+                        @Html.DropDownList("Type", null, new { @class = "form-control", validator = "required" })
+
+                    </div>
+                </div>
+                <div tabitem="StartUpScript" class="ti">
+                    <textarea class="form-control" id="StartUpScript" name="StartUpScript">@Model.StartUpScript</textarea>
+                </div>
+                <div tabitem="ScriptBlock" class="ti">
+                    <textarea class="form-control" id="ScriptBlock" name="ScriptBlock">@Model.ScriptBlock</textarea>
+                </div>
+                <div tabitem="Style" class="ti">
+
+                    <textarea class="form-control" id="Style" name="Style">@Model.Style</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script>
+        $(function () {
+            $(document.forms[0]).validation();
+            $("form").bind("submit", function () {
+                if ($.validation.validate(this).isError) {
+                    return false;
+                }
+                foxOne.dataService($(this).attr("action"), $(this).serialize(), function (res) {
+                    if (res) {
+                        foxOne.alert("保存成功！");
+                        try {
+                            window.parent.parent.loadTree();
+                        }
+                        catch (e) { }
+                        try {
+                            if (window.top && window.top.onDialogClose && window.top.onDialogClose.length > 0) {
+                                window.top.onDialogClose.pop()(res);
+                            }
+                        } catch (e) { }
+                    }
+
+                });
+                return false;
+            });
+            autoHeight();
+            $(window).resize(autoHeight);
+        });
+
+        function autoHeight() {
+            var screenHeight = Math.min($(window).height(), $(document).height());
+            var tabBox = $(".tab-box").height();
+            var ulHeight = screenHeight - tabBox - 30;
+            $("[tabItem]").css("height", ulHeight - 30).css("overflow-y", "auto");
+        }
+    </script>
+</body>
+</html>

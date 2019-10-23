@@ -1,0 +1,46 @@
+﻿@model FoxOne.Controls.Tab
+@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+</head>
+<body>
+        @Html.CustomControl(Model)
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script type="text/javascript">
+        $(function () {
+            autoHeight();
+            $(window).resize(autoHeight);
+            $("#PageTab").bind("tabItemClick", function (e) {
+                var span = e.span;
+                var div = e.div;
+                if (span.attr("key") == "PreView" || span.attr("key") == "Design") {
+                    var iframeSrc = div.attr("src1");
+                    window.open(iframeSrc);
+                    e.stopPropagation();
+                }
+            });
+        });
+        function autoHeight() {
+            if ($("[tabItem]").length == 0) {
+                var listHeight = $(window).height();
+                $("div[widget='IFrame']").css("height", listHeight).css("overflow-y", "hidden");
+            }
+            else {
+                var listHeight = $(window).height() - $(".tab-box").outerHeight();
+                $("[tabItem]").css("height", listHeight).css("overflow-y", "hidden");
+            }
+        }
+
+        function loadTree() {
+            window.parent.loadTree();
+        }
+    </script>
+</body>
+</html>

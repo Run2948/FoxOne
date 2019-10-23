@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>所有投票主题</title>
+    <style>
+        html, body {
+            background-color: #EEE;
+            font-size: 12px;
+            color: green;
+        }
+
+        h1 {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #CCC;
+        }
+
+        .container {
+            margin: 50px auto;
+            width: 900px;
+            position: relative;
+        }
+
+        .item {
+            padding: 20px 10px 10px 10px;
+            margin: 20px auto;
+            border-radius: 5px;
+            background-color: #FFF;
+            border: 1px solid #CCC;
+            line-height: 25px;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .status {
+            color: #666;
+        }
+
+        .status1 {
+            text-align: right;
+            position: absolute;
+            top: -5px;
+            right: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer {
+            text-align: right;
+        }
+
+        a, a:link, a:visited, a:active {
+            text-decoration: none;
+            color: #ec971f;
+        }
+
+            a:hover {
+                color: red;
+            }
+
+        .addnew {
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 0px;
+        }
+    </style>
+    <link href="~/Styles/vote.css" rel="stylesheet" />
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+</head>
+<body>
+    <div class="container">
+        <h1>广东旭诚科技投票系统</h1>
+        <div class="user-info">
+            当前登录：@FoxOne.Business.Security.Sec.User.Name
+            [<a href="/Home/LogOut">注销</a>]
+        </div>
+        <div class="item">
+            <p style="color:red;text-align:center;">
+                @(ViewData["ErrorMessage"] == null ? "处理过程中发生了异常" : ViewData["ErrorMessage"].ToString())
+            </p>
+            <p>
+                <a href="/Vote/Index">返回首页</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

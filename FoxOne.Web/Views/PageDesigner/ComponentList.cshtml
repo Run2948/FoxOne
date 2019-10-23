@@ -1,0 +1,177 @@
+﻿@model  List<FoxOne.Web.Controllers.ComponentListModel>
+@{
+    Layout = null;
+}
+@using FoxOne.Core
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>组件列表</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        .component-container {
+            vertical-align: top;
+            width: 250px;
+            float: left;
+            height: 700px;
+            border: 1px solid #CCC;
+            margin: 10px 0px 0px 10px;
+        }
+
+        .component-editor {
+            float: left;
+            height: 700px;
+            margin: 10px 0px 0px 10px;
+            border: 1px solid #CCC;
+        }
+
+        .component-item {
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            padding: 10px;
+            float: left;
+            margin: 10px 0px 0px 10px;
+            width: 190px;
+            background-color: #EEE;
+            cursor: pointer;
+        }
+
+        .component-item-selected {
+            background-color: #666;
+            border: 1px solid #444;
+            color: white;
+        }
+
+        .component-item img {
+            width: 30px;
+            height: 30px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .component-item p {
+            margin: 0px 0px 0px 0px;
+            font-size: 12px;
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 13px;
+            padding: 10px;
+            background-color: #EEE;
+            border-bottom: 1px solid #CCC;
+        }
+
+        .component-type {
+            float: left;
+            height: 700px;
+            margin: 10px 0px 0px 10px;
+            border: 1px solid #CCC;
+            width: 100px;
+        }
+
+            .component-type p {
+                border: 1px solid #CCC;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 10px 0px 10px;
+                background-color: #EEE;
+                cursor: pointer;
+            }
+
+                .component-type p.selected {
+                    background-color: #666;
+                    border: 1px solid #444;
+                    color: white;
+                }
+    </style>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    <script>
+        var urlPara = foxOne.getQueryString();
+        $(function () {
+            $(".component-item").bind("click", function () {
+                urlPara._TYPE_NAME = $(this).attr("title");
+                var src = "/PageDesigner/ComponentEditor";
+                $("#editorFramer").attr("src", foxOne.buildUrl(src, urlPara));
+                $(".component-item-selected").removeClass("component-item-selected");
+                $(this).addClass("component-item-selected");
+            });
+            $(".component-item-selected").click();
+            if ($(".component-item").length == 1) {
+                $(".component-container").remove();
+            }
+            var types = $(".component-type>p");
+            if (types.length <= 1) {
+                $(".component-type").remove();
+            }
+            else {
+                types.bind("click", function () {
+                    var type = $(this).html();
+                    $(".selected").removeClass("selected");
+                    $(this).addClass("selected");
+                    $(".component-item").hide();
+                    $("div[cType='" + type + "']").show();
+                });
+                var selected = $(".component-item-selected");
+                if (selected.length > 0) {
+                    var text = selected.attr("cType");
+                    $(".component-type>p").each(function () {
+                        if ($(this).html() == text) {
+                            $(this).click();
+                        }
+                    });
+                }
+                else {
+                    $(".component-type>p").eq(0).click();
+                }
+            }
+            autoHeight();
+            $(window).resize(autoHeight);
+        });
+
+        function autoHeight() {
+            var screenHeight = Math.min($(window).height(), $(document).height());
+            var ulHeight = screenHeight - 20;
+            $(".component-container,.component-editor,.component-type").css("height", ulHeight);
+            var listHeight = ulHeight - $("h1").outerHeight();
+            $(".component-list").css("height", listHeight).css("overflow-y", "scroll");
+            var typeWidth = 0, listWidth = 0;
+            if ($(".component-container").length > 0) {
+                listWidth = $(".component-container").outerWidth()+10;
+            }
+            if ($(".component-type").length > 0) {
+                typeWidth = $(".component-type").outerWidth()+10;
+            }
+            var width = $(window).width() - listWidth - typeWidth - 20;
+            $(".component-editor").css("width", width);
+        }
+    </script>
+</head>
+<body>
+    <div class="component-type">
+        <h1>组件分类</h1>
+        @foreach (var t in Model.Distinct(o => o.Type).Select(o => o.Type))
+        {
+            <p>@t</p>
+        }
+    </div>
+    <div class="component-container">
+        <h1>组件列表</h1>
+        <div class="component-list">
+            @foreach (var m in Model)
+            {
+                <div class="component-item @m.CssClass" ctype="@m.Type" title="@m.ComponentTypeFullName">
+                    <img src="@m.ComponentImage" alt="" />
+                    <p>@m.ComponentName.Substring(20, "..")</p>
+                    <p>@m.ComponentTypeName.Substring(20, "..")</p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="component-editor">
+        <iframe id="editorFramer" width="100%" height="100%" frameborder="0" scrolling="auto"></iframe>
+    </div>
+</body>
+</html>

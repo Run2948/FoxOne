@@ -1,0 +1,136 @@
+﻿@{Layout = null;}
+@using FoxOne.Business
+@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <style>
+        td.red {
+            color: red;
+        }
+
+        td.green {
+            color: green;
+        }
+
+        .form-ctrl {
+            width: 150px;
+            padding: 6px;
+            font-size: 14px;
+            line-height: 1.4285752;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),;
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input.ck{margin-left:10px;}
+    </style>
+</head>
+<body class="easyui-layout">
+    <div class="treeform-left" data-options="region:'west',split:true" title="@Html.Lang("TreeMenu")" style="width: 230px;">
+        <div class="tree-list">
+            <ul id="tree" class="ztree"></ul>
+        </div>
+    </div>
+    <div id="main" data-options="region:'center'" style="overflow:hidden;" class="main-container">
+        <div class="toolbar">
+            <form id="geForm">
+                <input type="hidden" value="" id="TableName" name="TableName" />
+                <label for="CRUDName">CRUDName</label>
+                <input type="text" id="CRUDName" name="CRUDName" class="form-ctrl" />
+                <input type="checkbox" class="ck" checked="checked" id="IsList" name="IsList" /><label for="IsList">
+                    生成列表
+                </label>
+                <input type="text" id="ListName" name="ListName" class="form-ctrl" />
+                <input type="checkbox" class="ck" checked="checked" name="IsEdit" id="IsEdit" /><label for="IsEdit">
+                    生成表单
+                </label>
+                <input type="text" id="EditName" name="EditName" class="form-ctrl" />
+
+                <label for="PageTitle">
+                    页面标题
+                </label>
+                <input type="text" id="PageTitle" name="PageTitle" class="form-ctrl" />
+                <input class="btn btn-success" id="btnInsert" onclick="addPage()" style="margin-left:20px;" type="button" value="生成" />
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var pageId = "";
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false,
+                dblClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: function (e, treeId, node) {
+                    if (node.id != 'Root') {
+                        foxOne.dataService("/PageDesigner/GetTable/" + node.id, {}, function (res) {
+                            var moduleName = node.id.substr(node.id.indexOf('_')+1);
+                            $("#ListName").val(moduleName+"List");
+                            $("#EditName").val(moduleName+"Edit");
+                            $("#CRUDName").val(node.id.replace('_', ''));
+                            $("#TableName").val(node.id);
+                            $("#PageTitle").val(moduleName);
+                            $("[widget='Table']").remove();
+                            $("#main").append(res);
+                            autoHeight();
+                            $("[widget='Table']").find("td").each(function () {
+                                if ($(this).html().toLowerCase() == 'false') {
+                                    $(this).addClass("red");
+                                }
+                                else {
+                                    if ($(this).html().toLowerCase() == 'true') {
+                                        $(this).addClass("green");
+                                    }
+
+                                }
+                            });
+                        }, "post", true);
+                    }
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        };
+        function autoHeight() {
+            var listHeight = $(window).height() - $(".toolbar").height() - 50;
+            $("[widget='Table']").css("height", listHeight).css("overflow-y", "auto");
+        }
+
+        function addPage() {
+            var formData = $("#geForm").serialize();
+            foxOne.dataService("/Entity/GenerateCRUD", formData, function (res) {
+
+            });
+        }
+
+        $(document).ready(function () {
+            foxOne.dataService("/PageDesigner/GetTable", {}, function (res) {
+                var treeObj = $.fn.zTree.init($("#tree"), setting, res);
+            }, "post", true);
+
+            $(window).resize(autoHeight);
+        });
+    </script>
+</body>
+</html>

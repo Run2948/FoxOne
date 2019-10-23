@@ -1,0 +1,154 @@
+﻿@using FoxOne.Controls
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ComponentEntity</title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+</head>
+<body class="easyui-layout">
+    <div>
+        <div class="toolbar">
+            <input class="btn btn-success" id="btnInsert" onclick="editCtrl()" type="button" value="新增" />
+            <input class="btn btn-danger" id="btnBatchDelete" type="button" onclick="deleteCtrls()" value="批量删除" />
+            <input class="btn btn-primary" id="btnGetColumn" type="button" onclick="getColumnFromDs()" value="从数据源获取列" />
+            <input class="btn btn-primary" id="btnGetField" type="button" onclick="getFieldFromDs()" value="从数据源获取字段" />
+            <input class="btn btn-primary" id="btnMergeColumn" type="button" onclick="mergeColumn()" value="合并列" />
+        </div>
+        @Html.CustomControl(ViewData["table"] as FoxOne.Business.IComponent)
+    </div>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    <script>
+        var queryParam = foxOne.getQueryString();
+        $(function () {
+            $("#btnGetColumn").hide();
+            $("#btnGetField").hide();
+            $("#btnMergeColumn").hide();
+            if (queryParam && queryParam[foxOne.baseType]) {
+                if (queryParam[foxOne.baseType] == "FoxOne.Controls.TableColumn") {
+                    $("#btnGetColumn").show();
+                    $("#btnMergeColumn").show();
+                }
+                else if (queryParam[foxOne.baseType] == "FoxOne.Controls.FormControlBase") {
+                    $("#btnGetField").show();
+                }
+            }
+            $(document).on("click", "[checkAll]", function () {
+                var allCk = $(this).closest("table").find("input[type='checkbox']").not("[checkAll]");
+                var checked = this.checked;
+                allCk.each(function () {
+                    this.checked = checked;
+                });
+            });
+        });
+        var table = $("table");
+        function editCtrl(pageId, ctrlId) {
+            if (queryParam && !queryParam[foxOne.baseType]) {
+                queryParam[foxOne.baseType] = "FoxOne.Controls.PageControlBase";
+            }
+            var url = "/PageDesigner/ComponentList";
+            if (pageId) {
+                queryParam[foxOne.pageId] = pageId;
+                queryParam[foxOne.ctrlId] = ctrlId;
+                if (queryParam[foxOne.baseType] == "FoxOne.Controls.PageControlBase") {
+                    url = "/PageDesigner/ComponentEditor"
+                }
+            }
+            else {
+                delete queryParam[foxOne.ctrlId];
+                queryParam[foxOne.formViewMode] = "Insert";
+            }
+            $.modal({
+                url: foxOne.buildUrl(url, queryParam, false),
+                title: '控件编辑',
+                overlayClose: true,
+                onClose: function (res) {
+                    reloadPage();
+                },
+                width: 950,
+                height: 600
+            });
+        }
+        function deleteCtrl(pageId, ctrlId) {
+            if (confirm('您确定要删除此控件吗？')) {
+                var param = {};
+                param[foxOne.pageId] = pageId;
+                param[foxOne.ctrlId] = ctrlId;
+                var url = '/PageDesigner/ComponentDelete';
+                foxOne.dataService(url, param, function (res) {
+                    if (res) {
+                        reloadPage();
+                    }
+                });
+            }
+        }
+        function getColumnFromDs() {
+            foxOne.dataService("/PageDesigner/GetTableColumn", queryParam, function (res) {
+                if (res) {
+                    reloadPage();
+                }
+            });
+        }
+
+        function getFieldFromDs() {
+            foxOne.dataService("/PageDesigner/GetFormField", queryParam, function (res) {
+                if (res) {
+                    reloadPage();
+                }
+            });
+        }
+
+        function deleteCtrls() {
+            var ids = getIds();
+            if (ids.length == 0) {
+                alert("请至少选择一列！");
+                return;
+            }
+            if (confirm("你确定要删除选中的" + ids.length + "列吗？")) {
+                var param = {};
+                param[foxOne.ctrlId] = ids.join(',');
+                param[foxOne.pageId] = queryParam[foxOne.pageId];
+                foxOne.dataService('/PageDesigner/ComponentDelete', param, function (res) {
+                    if (res) {
+                        reloadPage();
+                    }
+                });
+            }
+        }
+
+        function getIds() {
+            var ids = [];
+            table.find(":checked").not("[checkAll]").each(function () {
+                var data = $(this).closest("tr").data();
+                var id = data.key;
+                if (id && id != '') {
+                    ids.push(id);
+                }
+            });
+            return ids;
+        }
+
+        function mergeColumn() {
+            var ids = getIds();
+            if (ids.length <= 1) {
+                alert("请至少选择两列");
+                return;
+            }
+            var param = {};
+            param[foxOne.ctrlId] = ids.join(',');
+            param[foxOne.pageId] = queryParam[foxOne.pageId];
+            foxOne.dataService("/PageDesigner/MergeTableColumn", param, function (res) {
+                if (res) {
+                    reloadPage();
+                }
+            });
+        }
+
+        function reloadPage() {
+            window.location.href = window.location.href;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<ArrayOfPermission xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Permission>
+    <Id>088b979e-6079-497c-897b-ef13348b36c9</Id>
+    <RentId>0</RentId>
+    <Name>编辑</Name>
+    <Code>DEPARTMENT_LIST_EDIT</Code>
+    <Rank>1</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-05T15:18:57.99</LastUpdateTime>
+    <Url>btnEdit</Url>
+    <ParentId>eba8e84f-4c48-451c-b7d6-72c33134cc54</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Control</Type>
+  </Permission>
+  <Permission>
+    <Id>12940e11-5d08-4b40-82d4-ab1d39b75c21</Id>
+    <RentId>0</RentId>
+    <Name>权限信息列表</Name>
+    <Code>PermissionList</Code>
+    <Rank>5</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T10:46:35.723</LastUpdateTime>
+    <Url>/Page/PermissionList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>3eed305c-ec29-4ba7-8156-ad11d56343e9</Id>
+    <RentId>0</RentId>
+    <Name>数据字典列表</Name>
+    <Code>DataDictionaryList</Code>
+    <Rank>10</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T18:11:22.03</LastUpdateTime>
+    <Url>/Page/DataDictionaryList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>43fa759b-8b74-4f7b-af55-569a8c987534</Id>
+    <RentId>0</RentId>
+    <Name>数据库表</Name>
+    <Code>PageDesignTableList</Code>
+    <Rank>5</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T14:24:26.12</LastUpdateTime>
+    <Url>/PageDesigner/TableList</Url>
+    <ParentId>Y</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>70b3184f-901e-43ec-b205-b8a1fc72e72d</Id>
+    <RentId>0</RentId>
+    <Name>删除</Name>
+    <Code>DEPARTMENT_LIST_DELETE</Code>
+    <Rank>2</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-05T15:19:17.387</LastUpdateTime>
+    <Url>btnDelete</Url>
+    <ParentId>eba8e84f-4c48-451c-b7d6-72c33134cc54</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Control</Type>
+  </Permission>
+  <Permission>
+    <Id>71ac43ea-4f4d-4278-972b-64dcdea5d982</Id>
+    <RentId>0</RentId>
+    <Name>用户信息列表</Name>
+    <Code>UserList</Code>
+    <Rank>2</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T10:46:06.66</LastUpdateTime>
+    <Url>/Page/UserList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>7f729936-863e-49a2-97fa-1b006dc8afcb</Id>
+    <RentId>0</RentId>
+    <Name>批量删除</Name>
+    <Code>DEPARTMENT_LIST_BATCH_DELETE</Code>
+    <Rank>3</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-05T15:19:36.313</LastUpdateTime>
+    <Url>btnBatchDelete</Url>
+    <ParentId>eba8e84f-4c48-451c-b7d6-72c33134cc54</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Control</Type>
+  </Permission>
+  <Permission>
+    <Id>7f8f9a24-6948-47e4-a3ee-553089975b7a</Id>
+    <RentId>0</RentId>
+    <Name>查看名称</Name>
+    <Code>DEPARTMENT_LIST_NAME</Code>
+    <Rank>5</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-05T15:19:55.953</LastUpdateTime>
+    <Url>columnName</Url>
+    <ParentId>eba8e84f-4c48-451c-b7d6-72c33134cc54</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Control</Type>
+  </Permission>
+  <Permission>
+    <Id>92cb564f-eae4-4b1b-b8ef-b528a8fc186c</Id>
+    <RentId>0</RentId>
+    <Name>增删改查列表</Name>
+    <Code>CRUDEntityList</Code>
+    <Rank>4</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T14:24:20.75</LastUpdateTime>
+    <Url>/Page/CRUDEntityList</Url>
+    <ParentId>Y</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>95ed11e7-78d2-418b-9269-3d2bf93ae960</Id>
+    <RentId>0</RentId>
+    <Name>角色类型信息列表</Name>
+    <Code>RoleTypeList</Code>
+    <Rank>3</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T10:46:19.843</LastUpdateTime>
+    <Url>/Page/RoleTypeList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>b3165b22-b58f-4f40-a179-33321b40a9c0</Id>
+    <RentId>0</RentId>
+    <Name>布局信息列表</Name>
+    <Code>LayoutEntityList</Code>
+    <Rank>2</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T14:24:03.44</LastUpdateTime>
+    <Url>/Page/LayoutEntityList</Url>
+    <ParentId>Y</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>cc209e06-b2c3-4108-a1ce-9568678585d3</Id>
+    <RentId>1</RentId>
+    <Name>页面设计</Name>
+    <Code>PageDesignIndex</Code>
+    <Rank>1</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-07-22T16:56:16.87</LastUpdateTime>
+    <Url>/PageDesigner/Index</Url>
+    <ParentId>Y</ParentId>
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>eba8e84f-4c48-451c-b7d6-72c33134cc54</Id>
+    <RentId>0</RentId>
+    <Name>组织信息列表</Name>
+    <Code>DepartmentList</Code>
+    <Rank>1</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T10:45:55.85</LastUpdateTime>
+    <Url>/Page/DepartmentList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>f601842d-a71f-49c6-aec7-1884d35f3d9d</Id>
+    <RentId>0</RentId>
+    <Name>外置文件列表</Name>
+    <Code>ExternalFileEntityList</Code>
+    <Rank>3</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T14:24:12.48</LastUpdateTime>
+    <Url>/Page/ExternalFileEntityList</Url>
+    <ParentId>Y</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>fb862c2a-fe7e-45cb-b31c-a715f40903c3</Id>
+    <RentId>0</RentId>
+    <Name>角色信息列表</Name>
+    <Code>RoleList</Code>
+    <Rank>4</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-08-01T10:46:29.313</LastUpdateTime>
+    <Url>/Page/RoleList</Url>
+    <ParentId>X</ParentId>
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Page</Type>
+  </Permission>
+  <Permission>
+    <Id>X</Id>
+    <RentId>1</RentId>
+    <Name>系统管理</Name>
+    <Code>X</Code>
+    <Rank>1</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-07-22T16:55:53.153</LastUpdateTime>
+    <Url />
+    <Type>Module</Type>
+  </Permission>
+  <Permission>
+    <Id>Y</Id>
+    <RentId>0</RentId>
+    <Name>应用设计</Name>
+    <Code>Y</Code>
+    <Rank>3</Rank>
+    <Status>Enabled</Status>
+    <LastUpdateTime>2016-07-29T18:33:14.95</LastUpdateTime>
+    <Url />
+    <ParentId />
+    <Behaviour />
+    <Icon />
+    <Description />
+    <Type>Module</Type>
+  </Permission>
+</ArrayOfPermission>

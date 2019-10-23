@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ArrayOfRole xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Role>
+    <Id>d52dbb4f-949d-4b89-bddf-1375b767c1f4</Id>
+    <RentId>1</RentId>
+    <Status>Enabled</Status>
+    <RoleTypeId>81c8d21c-c018-4f18-979b-4c5da1d97f18</RoleTypeId>
+    <DepartmentId>c69dc8e8-3ed9-45f1-8f40-d404725d8986</DepartmentId>
+  </Role>
+</ArrayOfRole>

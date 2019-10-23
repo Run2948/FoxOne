@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ArrayOfUserRole xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UserRole>
+    <Id>efe555a8-9496-4c69-b43a-96073b0c2371</Id>
+    <RentId>1</RentId>
+    <Status>Enabled</Status>
+    <UserId>a49f1152-8907-4174-8c17-de5c6701910b</UserId>
+    <RoleId>d52dbb4f-949d-4b89-bddf-1375b767c1f4</RoleId>
+  </UserRole>
+</ArrayOfUserRole>

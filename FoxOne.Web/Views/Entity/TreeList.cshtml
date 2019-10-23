@@ -1,0 +1,103 @@
+﻿@{Layout = null;}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    @System.Web.Optimization.Styles.Render("~/style/common.css")
+    <style>
+        html, body {
+            overflow: hidden;
+        }
+    </style>
+    @System.Web.Optimization.Scripts.Render("~/script/common.js")
+    @System.Web.Optimization.Scripts.Render("~/script/widget.js")
+    <script>
+        var treeDataSource = '@Model.TreeDataSource';
+        var idParameterName = '@Model.IdParameterName';
+        var tableId = '@Model.Table.ID';
+        function exportToExcel() {
+            var setting = FoxOne.widget.setting(tableId);
+            setting.id = tableId;
+            var url = FoxOne.buildUrl("/Entity/ExportToExcel", setting);
+            window.open(url);
+        }
+    </script>
+
+</head>
+<body class="easyui-layout">
+    <div class="treeform-left" data-options="region:'west',split:true" title="@Html.Lang("TreeMenu")" style="width: 230px;">
+        <div class="tree-list">
+            <ul id="tree" class="ztree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center'" style="overflow:hidden;" class="main-container">
+    </div>
+    <script type="text/javascript">
+        var tableName = "";
+        var setting = {
+            view: {
+                showLine: true,
+                selectedMulti: false,
+                dblClickExpand: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: function (e, treeId, node) {
+                    var s = FoxOne.widget.setting(tableId);
+                    s[idParameterName] = node.id;
+                    s["TreeNodeText"] = node.name;
+                    tableName = node.name;
+                    FoxOne.widget.refresh(tableId);
+                }
+            }
+        };
+        $(document).ready(function () {
+            foxOne.dataService(treeDataSource, {}, function (res) {
+                var treeObj = $.fn.zTree.init($("#tree"), setting, res);
+                //treeObj.expandAll(true);
+            }, "post", true);
+            foxOne.widget.init();
+        });
+
+        function showAddComponent() {
+            var param = FoxOne.getQueryString();
+            if (param && !param.baseType) {
+                param.baseType = "FoxOne.Controls.PageControlBase";
+            }
+            param[foxOne.formViewMode] = "Insert";
+            var url = FoxOne.buildUrl('/PageDesigner/ComponentList', param, false);
+            $.modal({
+                url: url,
+                title: '@Html.Lang("Component_Editor")',
+                overlayClose: true,
+                onClose: function (res) {
+                    if (res != 'false') {
+                        refreshTable(tableId);
+                    }
+                },
+                width: 980,
+                height: 600
+            });
+        }
+
+        function generaetCRUD() {
+            if (tableName == "") {
+                alert("请先点选表");
+                return;
+            }
+            FoxOne.dataService("/CRUD/Create/" + tableName, {}, function (res) {
+                if (res) {
+                    foxOne.showSuccess("添加成功", "提示");
+                }
+            }, "post", true);
+        }
+    </script>
+</body>
+</html>
